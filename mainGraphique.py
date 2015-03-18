@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # coding: utf-8
 from Tkinter import *
+import identifier
 
 def alert():
     showinfo("alerte", "Bravo!")
@@ -41,7 +42,7 @@ def main():
 	fenetre.mainloop()
 
 def option1():
-	print "1"
+	identifier()
 def option2():
 	print "2"
 def option3():

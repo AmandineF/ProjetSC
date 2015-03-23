@@ -15,7 +15,7 @@ def identification():
 	"""
 
 	for interface in netifaces.interfaces():
-		if(str(interface) == 'lo0' || str(interface) == 'lo'):
+		if(str(interface) == 'lo0' or str(interface) == 'lo'):
 			pass
 		else:
 			try:

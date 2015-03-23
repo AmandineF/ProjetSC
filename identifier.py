@@ -8,12 +8,6 @@ import socket
 
 
 def identification():
-	"""
-	for ifaceName in netifaces.interfaces():
-	    addresses = [i['addr'] for i in netifaces.ifaddresses(ifaceName).setdefault(netifaces.AF_INET, [{'addr':'No IP addr'}] )]
-	    print '%s: %s' % (ifaceName, ', '.join(addresses))
-	"""
-
 	for interface in netifaces.interfaces():
 		if(str(interface) == 'lo0' or str(interface) == 'lo'):
 			pass
@@ -30,12 +24,9 @@ def identification():
 	netaddr_reseau_ip = netaddr_adresse_ip & netaddr_masque_sr
 	netaddr_reseau = netaddr.IPNetwork(str(netaddr_reseau_ip) + '/' + str(netaddr_masque_sr))
 	netaddr_plage = netaddr.IPRange(netaddr_reseau[1], netaddr_reseau[-2])
-
-	print netaddr_reseau
-	#a revoir pour automatiser ??
 	network = str(netaddr_reseau)
 
-	#Crée et envoie des paquets ARP
+	#Creee et envoie des paquets ARP
 	rec,unans=srp(Ether(dst='ff:ff:ff:ff:ff:ff')/ARP(pdst=network),timeout=10)
 
 	MACIP = []

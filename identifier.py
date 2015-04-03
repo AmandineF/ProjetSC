@@ -33,15 +33,16 @@ def identification():
 		MACIP = []
 		#On enregistre le résultat
 		for send,recv in rec:
-			couple = (recv.sprintf(r'%Ether.src%'), recv.sprintf(r'%ARP.psrc%'))
+			couple = ("nom", recv.sprintf(r'%ARP.psrc%'), recv.sprintf(r'%Ether.src%'))
 			MACIP.append(couple) 
 		#On affiche le résultat
 		i=0
 		while i < len(MACIP):
-			mac, ip = MACIP[i]
-			print 'MAC : ' + mac + ' <-> IP : ' + ip
+			nom, mac, ip = MACIP[i]
+			print 'Nom : '+nom+' MAC : ' + mac + ' <-> IP : ' + ip
 			i +=1
+		return MACIP
 	else:
 		print 'Erreur de reconnaissance réseau'
 
-identification()
+#identification()

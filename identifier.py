@@ -5,7 +5,7 @@ from scapy.all import *
 import netaddr
 import netifaces
 import socket
-
+from uuid import *
 
 def identification():
 	for interface in netifaces.interfaces():

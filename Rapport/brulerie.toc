@@ -1,9 +1,0 @@
-\select@language {french}
-\contentsline {section}{\numberline {1}Introduction}{4}
-\contentsline {section}{\numberline {2}Description du projet et des objectifs}{4}
-\contentsline {section}{\numberline {3}Retour sur l'existant}{4}
-\contentsline {section}{\numberline {4}Pr\IeC {\'e}sentation du travail r\IeC {\'e}alis\IeC {\'e}}{4}
-\contentsline {section}{\numberline {5}Architecture du code}{4}
-\contentsline {section}{\numberline {6}Planification et organisation}{4}
-\contentsline {section}{\numberline {7}Guide utilisateur}{4}
-\contentsline {section}{\numberline {8}Conclusion}{4}

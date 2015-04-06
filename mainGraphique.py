@@ -2,15 +2,6 @@
 # coding: utf-8
 from Tkinter import *
 import tkMessageBox
-import identifier
-import couper
-import subprocess
-from threading import Thread
-import re
-import threading
-
-threadTab = []
-t_stop = []
 
 def alert():
     tkMessageBox.showinfo("A propos", "Projet de Sécurité - Hiver 2015 - CHASSING Frank - FOUILLET Amandine - SIGNEUX Thomas")
@@ -32,10 +23,10 @@ def main():
 	fenetre.config(menu=menubar)
 
 	bouton_attaquer = Button(fenetre, cursor="hand2", text="Attaque", command=attaque)
-   	bouton_attaquer.grid(row=0, column=0, columnspan=1, padx=200, pady=5)
-    	bouton_defendre = Button(fenetre, cursor="hand2", text="Défense", command=defense)
-    	bouton_defendre.grid(row=1, column=0, columnspan=1, padx=200)
-    	fenetre.mainloop()
+    bouton_attaquer.grid(row=0, column=0, columnspan=1, padx=200, pady=5)
+    bouton_defendre = Button(fenetre, cursor="hand2", text="Défense", command=defense)
+    bouton_defendre.grid(row=1, column=0, columnspan=1, padx=200)
+    fenetre.mainloop()
 
 def attaque():
 	fenetre = Tk()
@@ -45,19 +36,14 @@ def attaque():
 	label.grid(row=0, column=0, columnspan=3, padx=4, pady=4)
 	
 	MacIP = []
-	"""	
 	couple = ("PCdeFrank", "192.168.0.106", "54:ae:27:2d:a3:6a")
 	couple2 = ("MacDAmandine", "192.168.0.107", "54:ae:27:2d:c3:6b")
 	MacIP.append(couple)
 	MacIP.append(couple2)
-	"""
-	MacIP = identifier.identification()
+	#MacIP = identification()
 	listeOrdi = Listbox(label, selectmode="multiple", width=60, height=10)
 	listeOrdi.pack()
-	nomGw, IpGw, MacGw = MacIP[0]
-	
-		
-	i=1
+	i=0
 	while i < len(MacIP):
 		nom, ip, mac = MacIP[i]
 		listeOrdi.insert(END, ""+nom+" "+ip+" "+mac)
@@ -66,12 +52,12 @@ def attaque():
 	label2 = LabelFrame(fenetre, text="Ordinateurs coupés :")
 	listeCoupe = Listbox(label2, selectmode="multiple", width=60, height=10)
 
-	bouton_couper = Button(fenetre,cursor="hand2", text="Couper", command= lambda x=listeOrdi, y=MacIP, z=listeCoupe, u=IpGw, v=MacGw:couperRes(x, y, z, u, v))
-    	bouton_couper.grid(row=2, column=0)
+	bouton_couper = Button(fenetre,cursor="hand2", text="Couper", command= lambda x=listeOrdi, y=MacIP, z=listeCoupe:couper(x, y, z))
+    bouton_couper.grid(row=2, column=0)
 	bouton_sniffer = Button(fenetre,cursor="hand2", text="Sniffer", command= lambda x=listeOrdi, y=MacIP:sniffer(x, y))
-    	bouton_sniffer.grid(row=2, column=1)
+    bouton_sniffer.grid(row=2, column=1)
 	bouton_retablir = Button(fenetre,cursor="hand2", text="Rétablir", command= lambda x=listeOrdi, y=MacIP, z=listeCoupe:retablir(x, y, z))
-    	bouton_retablir.grid(row=2, column=2)
+    bouton_retablir.grid(row=2, column=2)
 
 	label2.grid(row=3, column=0, columnspan=3, padx=4, pady=4)
 
@@ -89,7 +75,7 @@ def defense():
 	#champLabel.pack()
 	bouton_defense = Button(label,cursor="hand2",relief=GROOVE, text="Défense Désactivé")
 	bouton_defense.configure(command=lambda x=bouton_defense, y=champLabel:defenseBis(x,y))
-    	bouton_defense.pack(pady=7)
+    bouton_defense.pack(pady=7)
 
 def defenseBis(bouton_defense, champLabel):
 	if bouton_defense["relief"]==GROOVE:
@@ -101,36 +87,20 @@ def defenseBis(bouton_defense, champLabel):
 		#champLabel.config(text="Défense Inactive")
 		bouton_defense.config(text="Défense Désactivé", relief=GROOVE)
 
-def couperRes(listeOrdi, MacIP, listeCoupe, IpGw, MacGw):
+def couper(listeOrdi, MacIP, listeCoupe):
 	print "Couper la co"
 	selectList = listeOrdi.curselection()
-	#print selectList
+	print selectList
 	if len(selectList)==0:
 		 tkMessageBox.showinfo("Pas de sélection", "Vous n'avez rien séléctionné dans la liste des ordinateurs connectés !")
 	else:
 		print "Coupure des connexions"	
-		
 		for i in reversed(selectList):
 			str = listeOrdi.get(i)
 			listeOrdi.delete(i)
 			listeCoupe.insert(END, str)
-			#TabStr[0] = nom ; TabStr[1] = IpVictim ; TabStr[2] = MacVictim
-			TabStr = str.split()
 			#couper(ip, mac) -> parser pour obtenir l'ip et l'@ mac
-			"""
-			routeur = couper.get_default_gateway_linux()
-			for ip, mac in routeur:
-				IpGw = ip
-				MacGw = mac
-			"""
-			print "IP de la victime : "+TabStr[1]
-			print "Mac de la victime : "+TabStr[2]
-			print "IP Gateway : "+IpGw
-			print "Mac Gateway : "+MacGw
-			#tmpThread = Thread(target=couper.couperVictime, args=(TabStr[1], TabStr[2], IpGw, MacGw, True))
-			tmpThread = couper.couperVictime(TabStr[1], TabStr[2], IpGw, MacGw)			
-			threadTab.append(tmpThread)
-			tmpThread.start()
+			print str
 	
 def sniffer(listeOrdi, MacIP):
 	selectList = listeOrdi.curselection()
@@ -165,27 +135,17 @@ def sniffer(listeOrdi, MacIP):
 		
 
 def retablir(listeOrdi, MacIP, listeCoupe):
-		
 	selectList = listeCoupe.curselection()
 	if len(selectList)==0:
 		tkMessageBox.showinfo("Pas de sélection", "Vous n'avez rien séléctionné dans la liste des ordinateurs ayant la connexion coupée !")
 	else:
-		"""
 		print "Rétablissement des connexions"	
-		"""
 		for i in reversed(selectList):
-			tmpThread = threadTab[int(i)]
-			tmpThread.stop()
-			threadTab.remove(tmpThread)
-			#tmpThread = Thread(target=couper.couperVictime, args=("", "", "", "", False))
-			
 			str = listeCoupe.get(i)
 			listeCoupe.delete(i)
 			listeOrdi.insert(END, str)
 			#retablir(ip, mac) 
-			print str
-
-
+			print str			
 	
 
 main()

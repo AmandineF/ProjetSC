@@ -16,48 +16,58 @@
 \newpage
 \tableofcontents
 \newpage
-\section{Introduction}
+\section*{Introduction}
 
 Avec la multiplication des objets connectés, notamment les smartphones, de nombreux réseaux publics ont vu le jour dans diverses endroits. Cependant, la sécurité de ces réseaux est parfois douteuse et il est aisé de s’introduire sur le réseau. Une fois sur ces réseaux, les possibiltés d'intrusions et de malveillances sont nombreuses.
-L’attaque Man In The Middle a pour but d’intercepter les communications transitant entre deux machines, sans que ni l’une ni l’autre ne se doute que le canal de communication est compromis.
-L’attaquant a alors la possibilité de lire mais aussi de modifier les messages  (dans une certaine mesure).
 
 \section{Description du projet et des objectifs}
 
-L’objectif de se projet est de mettre en place des scénarios d’attaques de piratage de réseaux et de proposer des moyens de défense. Dans un premier temps, nous explorerons l'actualité des attaques de réseaux publics. Puis nous présenterons le travail réalisé lors du projet. Suivrons les chapitres liés aux descriptions techniques du projet ainsi qu'un guide d'utilisation.
-Objectifs finaux :
+\subsection{L'attaque Man In The Middle}
+L’attaque Man In The Middle a pour but d’intercepter les communications transitant entre deux machines, sans que ni l’une ni l’autre ne se doute que le canal de communication est compromis.
+L’attaquant a alors la possibilité de lire mais aussi de modifier les messages  (dans une certaine mesure).
+\subsection{Objectifs initiaux}
+L’objectif de ce projet est de mettre en place des scénarios d’attaques de piratage de réseaux et de proposer des moyens de défense. Dans un premier temps, nous explorerons l'actualité des attaques de réseaux publics. Puis nous présenterons le travail réalisé lors du projet. Suivrons les chapitres liés aux descriptions techniques du projet ainsi qu'un guide d'utilisation.
 
 \begin{itemize}
 \item Pouvoir identifier les ordinateurs connectés au routeur
 \item Couper l’ensemble des connexions au routeur afin de bénéficier d’une meilleure bande passante
 \item Limiter la connexion des personnes connectées au réseau
 \item Récupérer les informations transitant sur les réseau pour pouvoir les analyser et identifier les personnes se trouvant dans le bar
-\item Organisr une défense aux attaques précédentes
+\item Organiser une défense aux attaques précédentes
 \item Faire une vidéo de présentation 
 \end{itemize}
 
-\section{Retour sur l'existant}
-
-
-
 \section{Présentation du travail réalisé}
 
-\subsection{Attaques}
-
+\subsection{Attaque}
 Dans cette section, nous allons présenter nos applications d'attaques. Plusieurs scripts ont ainsi été déployés pour les réaliser. Le premier script vise à identifier les machones sur le réseau.
 Le second 
+\subsubsection{Identification}
+\subsubsection{Coupure}
+\subsubsection{Sniffer}
 
-\subsection{Defenses}
-
+\subsection{Défense}
 Dans cette section, nous allons présenter nos applications de défense.
 Afin de contrer les attaques ciblées sur une machine, nous avons déployé deux scripts. Le premier réalise une détection pour savoir si la machine est victime d'une attaque ARP spoofing. Le second script est une simple commande qui permet de contrer l'attaque de coupe de connexion.
+\subsubsection{Détection}
+\subsubsection{Anti-coupure}
 
-
-\section{Architecture du code}
-\section{Planification et organisation}
 \section{Guide utilisateur}
+\subsection{Interface principale}
+\subsection{Attaquer}
+\subsubsection{Couper et rétablir}
+\subsubsection{Sniffer}
+\subsection{Se défendre}
+\subsubsection{Détecter une attaque}
+\subsubsection{Activer une protection contre les coupures}
 
-\section{Conclusion}
+\section{Planification et organisation}
+\subsection{Outils utilisés}
+\subsection{Planification}
+
+\section{Améliorations}
+
+\section*{Conclusion}
 
 \newpage
 \listoffigures

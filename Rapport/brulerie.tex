@@ -2,8 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
-\usepackage{minitoc}
-\usepackage[french]{babel}
+
 \usepackage[right=2.5cm, bottom=2.5cm,top=2.5cm, left=2.5cm]{geometry}
 \title{\vspace{\fill} Cryptographie et sécurité \\ ~\textbf{IFT-606} \\~\\ Rapport de projet - La Brulerie}
 \author{Amandine Fouillet - 14 130 638  ~\\ Frank Chassing - 14 153 710 ~\\ Thomas Signeux - 14 126 590}
@@ -18,13 +17,28 @@
 \newpage
 \section*{Introduction}
 
-Avec la multiplication des objets connectés, notamment les smartphones, de nombreux réseaux publics ont vu le jour dans diverses endroits. Cependant, la sécurité de ces réseaux est parfois douteuse et il est aisé de s’introduire sur le réseau. Une fois sur ces réseaux, les possibiltés d'intrusions et de malveillances sont nombreuses.
+Avec la multiplication des objets connectés, notamment les smartphones et autres appareils mobiles, de nombreux réseaux publics ont vu le jour dans diverses endroits. Cependant, la sécurité de ces réseaux est parfois douteuse et il est aisé de s’y introduire, à l'insu de tous. Une fois sur ces réseaux, les possibiltés d'intrusions et de malveillances sont nombreuses. 
+
+Parmi ces intrusions, l'une d'elles peut être particulièrement efficace et dangereuse pour les personnes visées. Cette attaque s'appelle Man In The Middle.
+
+Ce projet a pour but d'étudier cette faiblesse du réseau en développant une application capable de reproduire les principales attaques Man In the Middle mais également de pouvoir s'en protéger.
 
 \section{Description du projet et des objectifs}
 
 \subsection{L'attaque Man In The Middle}
 L’attaque Man In The Middle a pour but d’intercepter les communications transitant entre deux machines, sans que ni l’une ni l’autre ne se doute que le canal de communication est compromis.
 L’attaquant a alors la possibilité de lire mais aussi de modifier les messages  (dans une certaine mesure).
+
+Il existe plusieurs techniques pour ce fair passer pour l'une ou l'autre de ces machines cibles.
+
+\begin{itemize}
+	\item l'ARP Spoofing : attaque la plus fréquente, utilisée dans la partie pratique de ce projet. On force les communications à transiter par l'ordinateur de l'attaquant qui se fait alors passer pour le routeur (gateway) du réseau.
+	\item le DNS Poisoning : le but de cette attaque est de faire correspondre l'adresse IP d'une machine controlée par un pirate à un nom réel et valide d'une machine publique. Pour cela, il altère le ou les serveur(s) DNS du réseau.
+	\item l'annalyse du trafic : technique de sniffing permettant de visualiser les informations non chiffrées.
+	\item le déni de service : empêcher le fonctionnement d'une machine pour en prender le contrôle.
+\end{itemize}
+
+
 \subsection{Objectifs initiaux}
 L’objectif de ce projet est de mettre en place des scénarios d’attaques de piratage de réseaux et de proposer des moyens de défense. Dans un premier temps, nous explorerons l'actualité des attaques de réseaux publics. Puis nous présenterons le travail réalisé lors du projet. Suivrons les chapitres liés aux descriptions techniques du projet ainsi qu'un guide d'utilisation.
 
@@ -40,7 +54,7 @@ L’objectif de ce projet est de mettre en place des scénarios d’attaques de 
 \section{Présentation du travail réalisé}
 
 \subsection{Attaque}
-Dans cette section, nous allons présenter nos applications d'attaques. Plusieurs scripts ont ainsi été déployés pour les réaliser. Le premier script vise à identifier les machones sur le réseau.
+Dans cette section, nous allons présenter nos applications d'attaques. Plusieurs scripts ont ainsi été déployés pour les réaliser. Le premier script vise à identifier les machines sur le réseau.
 Le second 
 \subsubsection{Identification}
 \subsubsection{Coupure}

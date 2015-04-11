@@ -1,0 +1,1 @@
+sniff(filter="arp and host " + self.IpGw, count=1)

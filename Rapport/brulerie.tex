@@ -1,9 +1,40 @@
 \documentclass[11pt]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{graphicx}
-
+\usepackage[french]{babel}
 \usepackage[right=2.5cm, bottom=2.5cm,top=2.5cm, left=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png,.gif}
+
+\usepackage{color}
+
+
+\usepackage[procnames]{listings}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstset{language=Python, 
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
 \title{\vspace{\fill} Cryptographie et sécurité \\ ~\textbf{IFT-606} \\~\\ Rapport de projet - La Brulerie}
 \author{Amandine Fouillet - 14 130 638  ~\\ Frank Chassing - 14 153 710 ~\\ Thomas Signeux - 14 126 590}
 \date{\today \vspace{\fill}}
@@ -16,7 +47,6 @@
 \tableofcontents
 \newpage
 \section*{Introduction}
-
 Avec la multiplication des objets connectés, notamment les smartphones et autres appareils mobiles, de nombreux réseaux publics ont vu le jour dans diverses endroits. Cependant, la sécurité de ces réseaux est parfois douteuse et il est aisé de s’y introduire, à l'insu de tous. Une fois sur ces réseaux, les possibiltés d'intrusions et de malveillances sont nombreuses. 
 
 Parmi ces intrusions, l'une d'elles peut être particulièrement efficace et dangereuse pour les personnes visées. Cette attaque s'appelle Man In The Middle.
@@ -64,14 +94,42 @@ Cette attaque consiste à analyser le réseau auquel l'attaquant est connecté e
 
 \textbf{Identifier le réseau automatiquement}~\\
 
-Toujours dans l'optique de permettre à l'utilisateur de communiquer seulement à travers une interface graphique, nous avons souhaité mettre en place une identification automatique du réseau ainsi que de la place d'adresse IP à scanner. Pour cela, nous avons eu recours à deux modules python : \textit{netifaces} et \textit{netaddr}. Grâce au premier, on peux parcourir la liste des interfaces de l'attaquant et récupérer celle qui est utilisée pour la connexion au réseau, puis on peut récupérer l'adresse IP locale de l'attaquant ainsi que le masque de sous-réseau. Puis, avec netaddr .. ~\\
+Toujours dans l'optique de permettre à l'utilisateur de communiquer seulement à travers une interface graphique, nous avons souhaité mettre en place une identification automatique du réseau ainsi que de la place d'adresse IP à scanner. Pour cela, nous avons eu recours à deux modules python : \textit{netifaces} et \textit{netaddr}. Grâce au premier, on peut parcourir la liste des interfaces de l'attaquant et récupérer celle qui est utilisée pour la connexion au réseau, puis on peut récupérer l'adresse IP locale de l'attaquant ainsi que le masque de sous-réseau. Puis, avec netaddr on effectue des opérations sur les adresses IP afin de trouver l'adresse et la plage d'adresse du réseau. ~\\
+\lstinputlisting[caption=Identification du reseau]{./Codes/identifier1.py}~\\
 
-\textbf{Envoie d'une requête}~\\
+\textbf{Envoi d'une requête ARP}~\\
 
+Maintenant que l'on a identifié la plage d'adresse du réseau auquel l'attaquant est connecté, on va envoyé une requête ARP a chaque adresse de cette plage. Pour cela, on utilise la fonction \textit{srp} de scapy qui envoi et reçoit des paquets de la couche 2.~\\
+\lstinputlisting[caption=Envoi d'une requête ARP]{./Codes/identifier2.py}~\\
 \textbf{Récupération des ordinateurs connectés}~\\
 
+Seul les ordinateurs connectés vont répondre et nous pourrons alors récupérer leur adresse IP et leur adresse Mac. Il nous suffit de parcourir le résultat de la fonction srp et d'enregistrer dans une liste les ordinateurs qui ont répondu.~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/identifier3.py}~\\
+\textbf{Lien avec l'interface}~\\
+
+Au niveau de l'interface, l'identification se lance automatique à l'appui sur le bouton "Attaquer" de la page principale. Le script d'identification retourne à l'interface la liste des ordinateurs connectés et on les affiche sous forme d'une liste dans la fenêtre d'attaque (FAIRE UNE REFERENCE). Il est également possible d'actualiser l'identification une fois sur la fenêtre d'attaque grâce au bouton "Actualiser", le script d'identification est relancé et la liste des machines connectées est mise à jour.
+
+
+
 \subsubsection{Coupure}
+
+\textbf{Création des faux paquets}~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/couper1.py}
+\textbf{Envoi des paquets}~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/couper2.py}
+\textbf{Sniff}~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/couper3.py}
+
+
 \subsubsection{Sniffer}
+
+\textbf{Man in the middle}~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/attaque.py}
+\textbf{Ecoute}~\\
+\textit{Sniff}~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/ecoute1.py}
+\textit{Traitement des paquets}~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/ecoute2.py}
 
 
 \subsection{Défense}
@@ -94,14 +152,15 @@ Afin de contrer les attaques ciblées sur une machine, nous avons déployé deux
 \subsection{Planification}
 
 \section{Améliorations}
-A rediger 
-identification : récupérer les noms des machines, l'os pour avoir plus d'informations sur les ordinateurs du réseau et pouvoir cibler une victime
-coupure : ralentir au lieu de couper, possible et simple mais pas encore implémenté dans l'interface graphique
-sniffer : obtenir plus d'informations sur ce que la victime est entrain de faire (site https, recherche google, mails, mot de passe), arrêter l'attaque man in the middle une fois l'écoute terminée (problème avec les threads)
-détection : donner plus d'informations sur l'attaquant (nom de l'ordinateur, os..), faire tourner la détection en continu ? 
-anti-cut : la désactivation pas très fonctionnelle (problème avec les thread)
+A rediger\\
+identification : récupérer les noms des machines, l'os pour avoir plus d'informations sur les ordinateurs du réseau et pouvoir cibler une victime\\
+coupure : ralentir au lieu de couper, possible et simple mais pas encore implémenté dans l'interface graphique\\
+sniffer : obtenir plus d'informations sur ce que la victime est entrain de faire (site https, recherche google, mails, mot de passe), arrêter l'attaque man in the middle une fois l'écoute terminée (problème avec les threads)\\
+détection : donner plus d'informations sur l'attaquant (nom de l'ordinateur, os..), faire tourner la détection en continu ? \\
+anti-cut : la désactivation pas très fonctionnelle (problème avec les thread)\\
 \section*{Conclusion}
 
 \newpage
 \listoffigures
+\lstlistoflistings
 \end{document}

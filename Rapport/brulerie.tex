@@ -109,10 +109,8 @@ Seul les ordinateurs connectés vont répondre et nous pourrons alors récupére
 
 Au niveau de l'interface, l'identification se lance automatique à l'appui sur le bouton "Attaquer" de la page principale. Le script d'identification retourne à l'interface la liste des ordinateurs connectés et on les affiche sous forme d'une liste dans la fenêtre d'attaque (FAIRE UNE REFERENCE). Il est également possible d'actualiser l'identification une fois sur la fenêtre d'attaque grâce au bouton "Actualiser", le script d'identification est relancé et la liste des machines connectées est mise à jour.
 
-
-
 \subsubsection{Coupure}
-Cette attaque consiste simplement a couper la connexion au réseau d'une autre machine. Elle consiste à mettre en place l'attaque man in the middle en envoyant des faux paquets à la victime et à la gateway. Le module scapy permet de créer et d'envoyer ces faux paquets.~\\
+Cette attaque consiste simplement a couper la connexion au réseau d'une autre machine. Pour la réaliser, on met en place l'attaque man in the middle en envoyant des faux paquets à la victime et à la gateway. Le module scapy permet de créer et d'envoyer ces faux paquets.~\\
 
 \textbf{Création des faux paquets}~\\
 
@@ -130,16 +128,30 @@ Après un moment, la véritable gateway envoi un ARP, la victime n'est alors plu
 
 Dans l'interface, la coupure peut se réaliser en sélectionnant une victime dans la liste des machines connectées au réseau et en appuyant sur le bouton couper. Il est également possible de couper plusieurs machines en même temps. Pour pouvoir couper plusieurs machines en même temps, le programme principal crée, pour chaque victime, un thread qui appelle le script de coupure. Lorsque l'attaquant souhaite rétablir la connexion de la victime, il peut appuyer sur le bouton rétablir, et le thread se termine.
 
-\subsubsection{Sniffer}
-
+\subsubsection{Ecoute}
+Lors de cette attaque, on veut, en quelque sorte, espionner la victime en ayant accès à la liste de ses visites sur internet. Comme lors de l'attaque précédente, pour avoir accès aux données échangées entre la victime et la gateway, il faut réaliser une attaque man in the middle afin de se placer entre les deux et récupérer les paquets échangés.
 \textbf{Man in the middle}~\\
-\lstinputlisting[caption=Récupération des réponses]{./Codes/attaque.py}
-\textbf{Ecoute}~\\
-\textit{Sniff}~\\
-\lstinputlisting[caption=Récupération des réponses]{./Codes/ecoute1.py}
-\textit{Traitement des paquets}~\\
-\lstinputlisting[caption=Récupération des réponses]{./Codes/ecoute2.py}
 
+On commence par mettre en place l'attaque man in the middle en envoyant des faux paquets ARP comme lors de l'attaque précédente. Mais, cette fois ci, on veut que la victime conserve un accès à internet afin d'observer ses visites. On envoie donc les faux paquets toutes les 1,5 ms et on n'écoute pas la communication entre la victime et la gateway.~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/attaque.py}~\\
+\textbf{Ecoute}~\\
+
+Pour observer la victime on lance une écoute sur son adresse IP. Etant donné que l'on se fait passer pour la gateway, la victime nous envoie directement ses paquets et on peut les analyser grâce à la fonction http\_header.~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/ecoute1.py}
+
+La fonction http\_header récupère tous les paquets et les analyse afin de récupérer les informations qui nous intéresse. Pour le cadre ce projet, nous nous sommes concentrés dans la récupération des adresses internet visitées. Pour retrouver cette adresse au milieu d'un paquet, on commence par repéré le champ GET afin d'être sur que l'on a un paquet html. Ensuite, on récupère seulement les données en en-tête du paquets qui sont encapsulées dans le champ Raw.  Parmis ces données, on recherche le champ "Host" et on récupère les données qui se trouvent après ce champ. 
+Une ces données récupérées, on peut récupérer plusieurs données : 
+\begin{itemize}
+\item L'adresse du serveur de la page web visitée par la victime, située juste après le champ "Host".
+\item L'adresse exacte de la page web visitée par la victime, située juste après le champ "Referer".
+\item Des informations sur l'OS de la victime et le navigateur utilisé, situées juste après le champ "User-Agent".
+\end{itemize}
+On ne trouve pas toujours toutes les données dans un paquet c'est pourquoi nous avons décidé de récupérer l'adresse du serveur si l'adresse exacte n'était pas présente. Pour effectuer cette récupération d'information et les recherches dans les paquets nous avons utilisé des expressions régulières et le module \textit{regex} de python.
+ ~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/ecoute2.py}~\\
+\textbf{Lien avec l'interface}~\\
+
+Pour effectuer une attaque d'écoute, l'utilisateur doit sélectionner sa victime dans la liste et cliquer sur le bouton sniffer. Ce bouton lance alors deux threads en parallèle. Le premier exécute le script de l'attaque et le second le script d'écoute.
 
 \subsection{Défense}
 Dans cette section, nous allons présenter nos applications de défense.
@@ -149,12 +161,28 @@ Afin de contrer les attaques ciblées sur une machine, nous avons déployé deux
 
 \section{Guide utilisateur}
 \subsection{Interface principale}
-\subsection{Attaquer}
+Au lancement de l'application, une fenêtre principale apparaît avec un menu et deux boutons : Attaque et Défense. Par le biais du menu, vous pouvez quitter l'application ou bien consulter les auteurs de celle-ci. Le bouton d'attaque amène vers une autre fenêtre permettant d'effectuer des attaques sur des machines connectés au même réseau que vous. Quant au bouton Défense, il permet d'ouvrir une fenêtre dévoilant des fonctionnalités qui peuvent vous protéger contre notre application.
+
+\subsection{Attaque}
+En cliquant sur le bouton Attaque, un scan du réseau s'effectue en un certain laps de temps et une nouvelle fenêtre s'ouvre avec une liste des ordinateurs connectés au même réseau. On retrouve des informations telles que l'adresse IP et l'adresse Mac des machines. En dessous de cette liste, vous trouverez quatre boutons  correspondant chacun à une fonctionnalité différente. Sous ces quatre boutons, on retrouve une seconde liste vide qui sera destinée à afficher les machines ayant la connexion coupée.
 \subsubsection{Couper et rétablir}
+Afin de couper la connexion d'un ordinateur présent sur le réseau, vous devez sélectionner dans la liste des machines celles que vous voulez couper. Lorsque vous avez effectué la sélection, il suffit de cliquer sur le bouton Couper afin de couper la connexion des ordinateurs sélectionnés. Vous devriez ainsi apercevoir les machines coupées dans la seconde liste.~\\
+Pour rétablir leur connexion il suffit de sélectionner les machines dont on veut rétablir la connexion dans la seconde liste, puis de cliquer sur le bouton Rétablir. Cela replacera les machines dans la première liste.
+
 \subsubsection{Sniffer}
-\subsection{Se défendre}
+Pour procéder à une écoute réseau d'une machine, il suffit de sélectionner la machine que l'on veut écouter dans la première liste puis de cliquer sur le bouton Sniffer. Il faut alors attendre plusieurs secondes le temps d'écouter, puis une nouvelle fenêtre s'ouvre où l'on retrouve dans une liste les différents sites web que la machine a consulté ainsi que les différents serveurs par lequel elle est passée. Si rien n'a été capturé, un message explicite apparaît dans la liste pour avertir que rien n'a été capturé.
+
+\subsubsection{Actualiser}
+Sur la fenêtre d'attaque, le bouton Actualiser permet d'actualiser la liste des ordinateurs connectés au réseau. Cela prend quelques secondes pour effectuer le scan de nouveau. Pour exécuter cette action, il faut qu'aucune machine ne soit coupée.
+
+\subsection{Défense}
+La fenêtre de défense se compose de seulement deux boutons : Le bouton de détection d'une attaque et le bouton d'anti-coupure.
+
 \subsubsection{Détecter une attaque}
+Si l'on clique sur le bouton de détection d'une attaque, cela va vérifier tout simplement si vous êtes en train de vous faire attaquer. Au bout de quelques secondes, une boite de dialogue s'ouvre et vous affiche si oui ou non vous êtes attaqués. Dans le cas où vous êtes attaqués, vous aurez l'adresse Mac de la machine attaquante.
+
 \subsubsection{Activer une protection contre les coupures}
+Si l'on active le bouton de protection contre les coupures, votre connexion internet ne pourra plus être coupée. Vous pourrez ainsi naviguer sans inquiétude sur Internet.
 
 \section{Planification et organisation}
 \subsection{Outils utilisés}

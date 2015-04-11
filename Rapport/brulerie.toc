@@ -6,19 +6,19 @@
 \contentsline {subsection}{\numberline {2.1}Attaque}{5}
 \contentsline {subsubsection}{\numberline {2.1.1}Identification}{5}
 \contentsline {subsubsection}{\numberline {2.1.2}Coupure}{7}
-\contentsline {subsubsection}{\numberline {2.1.3}Sniffer}{7}
-\contentsline {subsection}{\numberline {2.2}D\IeC {\'e}fense}{8}
-\contentsline {subsubsection}{\numberline {2.2.1}D\IeC {\'e}tection}{9}
-\contentsline {subsubsection}{\numberline {2.2.2}Anti-coupure}{9}
-\contentsline {section}{\numberline {3}Guide utilisateur}{9}
-\contentsline {subsection}{\numberline {3.1}Interface principale}{9}
-\contentsline {subsection}{\numberline {3.2}Attaquer}{9}
-\contentsline {subsubsection}{\numberline {3.2.1}Couper et r\IeC {\'e}tablir}{9}
-\contentsline {subsubsection}{\numberline {3.2.2}Sniffer}{9}
-\contentsline {subsection}{\numberline {3.3}Se d\IeC {\'e}fendre}{9}
-\contentsline {subsubsection}{\numberline {3.3.1}D\IeC {\'e}tecter une attaque}{9}
-\contentsline {subsubsection}{\numberline {3.3.2}Activer une protection contre les coupures}{9}
-\contentsline {section}{\numberline {4}Planification et organisation}{9}
-\contentsline {subsection}{\numberline {4.1}Outils utilis\IeC {\'e}s}{9}
-\contentsline {subsection}{\numberline {4.2}Planification}{9}
-\contentsline {section}{\numberline {5}Am\IeC {\'e}liorations}{9}
+\contentsline {subsubsection}{\numberline {2.1.3}Sniffer}{8}
+\contentsline {subsection}{\numberline {2.2}D\IeC {\'e}fense}{9}
+\contentsline {subsubsection}{\numberline {2.2.1}D\IeC {\'e}tection}{10}
+\contentsline {subsubsection}{\numberline {2.2.2}Anti-coupure}{10}
+\contentsline {section}{\numberline {3}Guide utilisateur}{10}
+\contentsline {subsection}{\numberline {3.1}Interface principale}{10}
+\contentsline {subsection}{\numberline {3.2}Attaquer}{10}
+\contentsline {subsubsection}{\numberline {3.2.1}Couper et r\IeC {\'e}tablir}{10}
+\contentsline {subsubsection}{\numberline {3.2.2}Sniffer}{10}
+\contentsline {subsection}{\numberline {3.3}Se d\IeC {\'e}fendre}{10}
+\contentsline {subsubsection}{\numberline {3.3.1}D\IeC {\'e}tecter une attaque}{10}
+\contentsline {subsubsection}{\numberline {3.3.2}Activer une protection contre les coupures}{10}
+\contentsline {section}{\numberline {4}Planification et organisation}{10}
+\contentsline {subsection}{\numberline {4.1}Outils utilis\IeC {\'e}s}{10}
+\contentsline {subsection}{\numberline {4.2}Planification}{10}
+\contentsline {section}{\numberline {5}Am\IeC {\'e}liorations}{10}

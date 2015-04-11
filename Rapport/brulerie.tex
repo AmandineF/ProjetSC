@@ -112,14 +112,23 @@ Au niveau de l'interface, l'identification se lance automatique à l'appui sur l
 
 
 \subsubsection{Coupure}
+Cette attaque consiste simplement a couper la connexion au réseau d'une autre machine. Elle consiste à mettre en place l'attaque man in the middle en envoyant des faux paquets à la victime et à la gateway. Le module scapy permet de créer et d'envoyer ces faux paquets.~\\
 
 \textbf{Création des faux paquets}~\\
-\lstinputlisting[caption=Récupération des réponses]{./Codes/couper1.py}
-\textbf{Envoi des paquets}~\\
-\lstinputlisting[caption=Récupération des réponses]{./Codes/couper2.py}
-\textbf{Sniff}~\\
-\lstinputlisting[caption=Récupération des réponses]{./Codes/couper3.py}
 
+On créée les deux faux paquets : le premier pour se faire passer pour la gateway auprès de la victime et le second pour se faire passer pour la victime auprès de la gateway.~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/couper1.py}~\\
+\textbf{Envoi des paquets}~\\
+
+On envoi les deux paquets grâce à la fonction \textit{send} de scapy qui envoi des paquets sur la couche 3.~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/couper2.py}~\\
+\textbf{Sniff}~\\
+
+Après un moment, la véritable gateway envoi un ARP, la victime n'est alors plus trompée car la communication ne passe plus par l'attaquant. Pour empêcher cela, on écoute la communication entre la gateway et la victime et dès que la gateway envoie une réponse ARP, l'attaquant usurpe la victime.~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/couper3.py}~\\
+\textbf{Lien avec l'interface}~\\
+
+Dans l'interface, la coupure peut se réaliser en sélectionnant une victime dans la liste des machines connectées au réseau et en appuyant sur le bouton couper. Il est également possible de couper plusieurs machines en même temps. Pour pouvoir couper plusieurs machines en même temps, le programme principal crée, pour chaque victime, un thread qui appelle le script de coupure. Lorsque l'attaquant souhaite rétablir la connexion de la victime, il peut appuyer sur le bouton rétablir, et le thread se termine.
 
 \subsubsection{Sniffer}
 

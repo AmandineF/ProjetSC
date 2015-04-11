@@ -107,7 +107,7 @@ Seul les ordinateurs connectés vont répondre et nous pourrons alors récupére
 \lstinputlisting[caption=Récupération des réponses]{./Codes/identifier3.py}~\\
 \textbf{Lien avec l'interface}~\\
 
-Au niveau de l'interface, l'identification se lance automatique à l'appui sur le bouton "Attaquer" de la page principale. Le script d'identification retourne à l'interface la liste des ordinateurs connectés et on les affiche sous forme d'une liste dans la fenêtre d'attaque (FAIRE UNE REFERENCE). Il est également possible d'actualiser l'identification une fois sur la fenêtre d'attaque grâce au bouton "Actualiser", le script d'identification est relancé et la liste des machines connectées est mise à jour.
+Au niveau de l'interface, l'identification se lance automatique à l'appui sur le bouton "Attaquer" de la page principale. Le script d'identification retourne à l'interface la liste des ordinateurs connectés et on les affiche sous forme d'une liste dans la fenêtre d'attaque. Il est également possible d'actualiser l'identification une fois sur la fenêtre d'attaque grâce au bouton "Actualiser", le script d'identification est relancé et la liste des machines connectées est mise à jour.
 
 \subsubsection{Coupure}
 Cette attaque consiste simplement a couper la connexion au réseau d'une autre machine. Pour la réaliser, on met en place l'attaque man in the middle en envoyant des faux paquets à la victime et à la gateway. Le module scapy permet de créer et d'envoyer ces faux paquets.~\\
@@ -115,15 +115,15 @@ Cette attaque consiste simplement a couper la connexion au réseau d'une autre m
 \textbf{Création des faux paquets}~\\
 
 On créée les deux faux paquets : le premier pour se faire passer pour la gateway auprès de la victime et le second pour se faire passer pour la victime auprès de la gateway.~\\
-\lstinputlisting[caption=Récupération des réponses]{./Codes/couper1.py}~\\
+\lstinputlisting[caption=Création des faux paquets]{./Codes/couper1.py}~\\
 \textbf{Envoi des paquets}~\\
 
 On envoi les deux paquets grâce à la fonction \textit{send} de scapy qui envoi des paquets sur la couche 3.~\\
-\lstinputlisting[caption=Récupération des réponses]{./Codes/couper2.py}~\\
+\lstinputlisting[caption=Envoi des paquets]{./Codes/couper2.py}~\\
 \textbf{Sniff}~\\
 
 Après un moment, la véritable gateway envoi un ARP, la victime n'est alors plus trompée car la communication ne passe plus par l'attaquant. Pour empêcher cela, on écoute la communication entre la gateway et la victime et dès que la gateway envoie une réponse ARP, l'attaquant usurpe la victime.~\\
-\lstinputlisting[caption=Récupération des réponses]{./Codes/couper3.py}~\\
+\lstinputlisting[caption=Sniff de la communication victime gateway]{./Codes/couper3.py}~\\
 \textbf{Lien avec l'interface}~\\
 
 Dans l'interface, la coupure peut se réaliser en sélectionnant une victime dans la liste des machines connectées au réseau et en appuyant sur le bouton couper. Il est également possible de couper plusieurs machines en même temps. Pour pouvoir couper plusieurs machines en même temps, le programme principal crée, pour chaque victime, un thread qui appelle le script de coupure. Lorsque l'attaquant souhaite rétablir la connexion de la victime, il peut appuyer sur le bouton rétablir, et le thread se termine.
@@ -133,11 +133,11 @@ Lors de cette attaque, on veut, en quelque sorte, espionner la victime en ayant 
 \textbf{Man in the middle}~\\
 
 On commence par mettre en place l'attaque man in the middle en envoyant des faux paquets ARP comme lors de l'attaque précédente. Mais, cette fois ci, on veut que la victime conserve un accès à internet afin d'observer ses visites. On envoie donc les faux paquets toutes les 1,5 ms et on n'écoute pas la communication entre la victime et la gateway.~\\
-\lstinputlisting[caption=Récupération des réponses]{./Codes/attaque.py}~\\
+\lstinputlisting[caption=Man in the middle]{./Codes/attaque.py}~\\
 \textbf{Ecoute}~\\
 
 Pour observer la victime on lance une écoute sur son adresse IP. Etant donné que l'on se fait passer pour la gateway, la victime nous envoie directement ses paquets et on peut les analyser grâce à la fonction http\_header.~\\
-\lstinputlisting[caption=Récupération des réponses]{./Codes/ecoute1.py}
+\lstinputlisting[caption=Traitement des paquets]{./Codes/ecoute1.py}
 
 La fonction http\_header récupère tous les paquets et les analyse afin de récupérer les informations qui nous intéresse. Pour le cadre ce projet, nous nous sommes concentrés dans la récupération des adresses internet visitées. Pour retrouver cette adresse au milieu d'un paquet, on commence par repéré le champ GET afin d'être sur que l'on a un paquet html. Ensuite, on récupère seulement les données en en-tête du paquets qui sont encapsulées dans le champ Raw.  Parmis ces données, on recherche le champ "Host" et on récupère les données qui se trouvent après ce champ. 
 Une ces données récupérées, on peut récupérer plusieurs données : 

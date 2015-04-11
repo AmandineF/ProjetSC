@@ -52,13 +52,27 @@ L’objectif de ce projet est de mettre en place des scénarios d’attaques de 
 \end{itemize}
 
 \section{Présentation du travail réalisé}
+Afin de répondre à nos différents objectifs nous avons décidé de mettre en place plusieurs attaques contre des utilisateurs connectés sur le même réseau que nous. Pour faciliter le déroulement des attaques nous avons créé une interface graphique simple qui permet à l'attaquant de mener des offensives contre sa victime en quelques clics. De façon à proposer un outil polyvalent, nous avons également introduit dans l'interface une fenêtre de défense avec deux différents types de protection implémentés. ~\\
 
+Pour réaliser les attaques, la défense et l'interface graphique nous avons utilisé un seul langage de programmation, le langage python. Outre sa portabilité, ce langage offre une multitude de librairies déjà implémentées pour la manipulation de paquets réseau notamment le module Scapy que nous avons utilisé pour réaliser chacune de nos attaques et défenses. Ce module permet de forger, envoyer, réceptionner et manipuler des paquets réseau.~\\
+
+Dans cette seconde section, nous allons vous présenter les scripts que nous avons implémentés, leur rôle et surtout leur fonctionnement.
 \subsection{Attaque}
-Dans cette section, nous allons présenter nos applications d'attaques. Plusieurs scripts ont ainsi été déployés pour les réaliser. Le premier script vise à identifier les machines sur le réseau.
-Le second 
+Nous avons implémenté trois différentes attaques : l'identification des utilisateurs sur le réseau, la coupure de ces usagers et enfin la récupération des liens internet qu'ils visitent. La première attaque est toujours effectuée car sans elle, il nous ait impossible d'effectuer les suivantes. Par contre les attaques de coupure et d'écoute, même si elles se ressemblent, ont été implémentées séparément. Ci dessous, nous allons décrire les différentes attaques, leur réalisation et leur fonctionnement à travers l'interface graphique.
 \subsubsection{Identification}
+Cette attaque consiste à analyser le réseau auquel l'attaquant est connecté et donner la liste de tous les utilisateurs présents et actifs sur ce même réseau. Ces usagers sont représentés par leur adresse IP et leur adresse MAC et ces identifiants seront utilisés pour cibler une victime lors des attaques suivantes. ~\\
+
+\textbf{Identifier le réseau automatiquement}~\\
+
+Toujours dans l'optique de permettre à l'utilisateur de communiquer seulement à travers une interface graphique, nous avons souhaité mettre en place une identification automatique du réseau ainsi que de la place d'adresse IP à scanner. Pour cela, nous avons eu recours à deux modules python : \textit{netifaces} et \textit{netaddr}. Grâce au premier, on peux parcourir la liste des interfaces de l'attaquant et récupérer celle qui est utilisée pour la connexion au réseau, puis on peut récupérer l'adresse IP locale de l'attaquant ainsi que le masque de sous-réseau. Puis, avec netaddr .. ~\\
+
+\textbf{Envoie d'une requête}~\\
+
+\textbf{Récupération des ordinateurs connectés}~\\
+
 \subsubsection{Coupure}
 \subsubsection{Sniffer}
+
 
 \subsection{Défense}
 Dans cette section, nous allons présenter nos applications de défense.
@@ -80,7 +94,12 @@ Afin de contrer les attaques ciblées sur une machine, nous avons déployé deux
 \subsection{Planification}
 
 \section{Améliorations}
-
+A rediger 
+identification : récupérer les noms des machines, l'os pour avoir plus d'informations sur les ordinateurs du réseau et pouvoir cibler une victime
+coupure : ralentir au lieu de couper, possible et simple mais pas encore implémenté dans l'interface graphique
+sniffer : obtenir plus d'informations sur ce que la victime est entrain de faire (site https, recherche google, mails, mot de passe), arrêter l'attaque man in the middle une fois l'écoute terminée (problème avec les threads)
+détection : donner plus d'informations sur l'attaquant (nom de l'ordinateur, os..), faire tourner la détection en continu ? 
+anti-cut : la désactivation pas très fonctionnelle (problème avec les thread)
 \section*{Conclusion}
 
 \newpage

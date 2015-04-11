@@ -1,0 +1,5 @@
+Serveur : ent.insa-rennes.fr
+Serveur : www.google.com
+Addresse exacte : http://frankchassing.fr/
+Serveur : openclassrooms.com
+Addresse exacte : http://ent.insa-rennes.fr/render.userLayoutRootNode.uP

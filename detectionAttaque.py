@@ -3,7 +3,6 @@ import os, time, netifaces, sys, logging
 from sys import platform
 from scapy.all import sniff
 
-fichier = open("detection.txt", "w")
 
 #On parcourt la liste des interfaces de l'ordinateur
 #afin de reperer laquelle est utilisee
@@ -27,6 +26,7 @@ def check_spoof (source, mac, destination):
     #Si la source du paquet n'est pas dans la liste requests et n'est pas l'adresse IP locale
     if not source in requests and source != local_ip:
         #Il y a surement une attaque, on enregistre l'adresse mac dans le fichier
+        fichier = open("detection.txt", "w")
         fichier.write(mac)
         fichier.write("\n")
     else:
@@ -53,6 +53,5 @@ def packet_filter (packet):
 
 def main():
 	print("Detection ARP Spoofing..")
-	sniff(filter = "arp", prn = packet_filter, store = 0, count=10)
-
+	sniff(filter = "arp", prn = packet_filter, store = 0, timeout=10)
 

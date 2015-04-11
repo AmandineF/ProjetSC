@@ -216,7 +216,7 @@ def sniffer(listeOrdi, IpGw, MacGw):
 
 		print "Attente - Analyse des paquets..."
 		#On sniff les paquets pendant 1 minute
-		time.sleep(1)
+		time.sleep(60)
 		print "Lecture du fichier..."
 		#Arret des threads de sniff
 		j=len(threadSniff)-1
@@ -279,6 +279,5 @@ def actualiser(listeOrdi, listeCoupe):
 			listeOrdi.insert(END, ""+nom+" "+ip+" "+mac)
 			i +=1
 			
-	
 
 main()

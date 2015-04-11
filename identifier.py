@@ -26,7 +26,8 @@ def identification():
 				masque_sr = netifaces.ifaddresses(interface)[netifaces.AF_INET][0]['netmask']
 				netaddr_masque_sr = netaddr.IPAddress(masque_sr)
 				netaddr_adresse_ip = netaddr.IPAddress(adresse_ip)
-				netaddr_reseau_ip = netaddr_adresse_ip & netaddr_masque_sr
+				#netaddr_reseau_ip = netaddr_adresse_ip & netaddr_masque_sr
+				netaddr_reseau_ip = adresse_ip & masque_sr
 				netaddr_reseau = netaddr.IPNetwork(str(netaddr_reseau_ip) + '/' + str(netaddr_masque_sr))
 
 				#netaddr_plage = netaddr.IPRange(netaddr_reseau[1], netaddr_reseau[-2])
@@ -58,4 +59,5 @@ def identification():
 		return MACIP
 	else:
 		print 'Erreur de reconnaissance réseau'
+identification()
 		

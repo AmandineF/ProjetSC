@@ -149,12 +149,28 @@ Afin de contrer les attaques ciblées sur une machine, nous avons déployé deux
 
 \section{Guide utilisateur}
 \subsection{Interface principale}
-\subsection{Attaquer}
+Au lancement de l'application, une fenêtre principale apparaît avec un menu et deux boutons : Attaque et Défense. Par le biais du menu, vous pouvez quitter l'application ou bien consulter les auteurs de celle-ci. Le bouton d'attaque amène vers une autre fenêtre permettant d'effectuer des attaques sur des machines connectés au même réseau que vous. Quant au bouton Défense, il permet d'ouvrir une fenêtre dévoilant des fonctionnalités qui peuvent vous protéger contre notre application.
+
+\subsection{Attaque}
+En cliquant sur le bouton Attaque, un scan du réseau s'effectue en un certain laps de temps et une nouvelle fenêtre s'ouvre avec une liste des ordinateurs connectés au même réseau. On retrouve des informations telles que l'adresse IP et l'adresse Mac des machines. En dessous de cette liste, vous trouverez quatre boutons  correspondant chacun à une fonctionnalité différente. Sous ces quatre boutons, on retrouve une seconde liste vide qui sera destinée à afficher les machines ayant la connexion coupée.
 \subsubsection{Couper et rétablir}
+Afin de couper la connexion d'un ordinateur présent sur le réseau, vous devez sélectionner dans la liste des machines celles que vous voulez couper. Lorsque vous avez effectué la sélection, il suffit de cliquer sur le bouton Couper afin de couper la connexion des ordinateurs sélectionnés. Vous devriez ainsi apercevoir les machines coupées dans la seconde liste.~\\
+Pour rétablir leur connexion il suffit de sélectionner les machines dont on veut rétablir la connexion dans la seconde liste, puis de cliquer sur le bouton Rétablir. Cela replacera les machines dans la première liste.
+
 \subsubsection{Sniffer}
-\subsection{Se défendre}
+Pour procéder à une écoute réseau d'une machine, il suffit de sélectionner la machine que l'on veut écouter dans la première liste puis de cliquer sur le bouton Sniffer. Il faut alors attendre plusieurs secondes le temps d'écouter, puis une nouvelle fenêtre s'ouvre où l'on retrouve dans une liste les différents sites web que la machine a consulté ainsi que les différents serveurs par lequel elle est passée. Si rien n'a été capturé, un message explicite apparaît dans la liste pour avertir que rien n'a été capturé.
+
+\subsubsection{Actualiser}
+Sur la fenêtre d'attaque, le bouton Actualiser permet d'actualiser la liste des ordinateurs connectés au réseau. Cela prend quelques secondes pour effectuer le scan de nouveau. Pour exécuter cette action, il faut qu'aucune machine ne soit coupée.
+
+\subsection{Défense}
+La fenêtre de défense se compose de seulement deux boutons : Le bouton de détection d'une attaque et le bouton d'anti-coupure.
+
 \subsubsection{Détecter une attaque}
+Si l'on clique sur le bouton de détection d'une attaque, cela va vérifier tout simplement si vous êtes en train de vous faire attaquer. Au bout de quelques secondes, une boite de dialogue s'ouvre et vous affiche si oui ou non vous êtes attaqués. Dans le cas où vous êtes attaqués, vous aurez l'adresse Mac de la machine attaquante.
+
 \subsubsection{Activer une protection contre les coupures}
+Si l'on active le bouton de protection contre les coupures, votre connexion internet ne pourra plus être coupée. Vous pourrez ainsi naviguer sans inquiétude sur Internet.
 
 \section{Planification et organisation}
 \subsection{Outils utilisés}

@@ -189,12 +189,12 @@ Si l'on active le bouton de protection contre les coupures, votre connexion inte
 \subsection{Planification}
 
 \section{Améliorations}
-A rediger\\
-identification : récupérer les noms des machines, l'os pour avoir plus d'informations sur les ordinateurs du réseau et pouvoir cibler une victime\\
-coupure : ralentir au lieu de couper, possible et simple mais pas encore implémenté dans l'interface graphique\\
-sniffer : obtenir plus d'informations sur ce que la victime est entrain de faire (site https, recherche google, mails, mot de passe), arrêter l'attaque man in the middle une fois l'écoute terminée (problème avec les threads)\\
-détection : donner plus d'informations sur l'attaquant (nom de l'ordinateur, os..), faire tourner la détection en continu ? \\
-anti-cut : la désactivation pas très fonctionnelle (problème avec les thread)\\
+Faute de temps, nous n'avons pas pu implémenter toutes les fonctionnalités que nous aurions pu faire. Nous aurions aimé par exemple identifier le nom des machines connectées sur le réseau dès le scan du réseau, ce qui reste un élément important pour identifier une personne dans la même pièce que nous. Cependant, nous n'avons pas eu le temps de trouver un moyen de faire cela efficacement. Nous arrivons seulement à récupérer l'OS et le type de navigateur d'une machine mais nous ne l'avons pas ajouté à l'interface.~\\
+Second point que nous aurions aurions pu améliorer, c'est le fait de rajouter le code du ralentissement de connexion à l'interface graphique. En effet, ayant trouvé comment coder cette fonctionnalité vers la fin du projet, nous n'avons pas pu l'implémenter sur l'application.~\\
+Egalement, au niveau de l'attaque, nous pourrions essayer d'obtenir plus d'informations sur les sites que visite la victime telles que son mail, son nom ou prénom, ses identifiants, etc. Nous aimerions aussi implémenter une fonction de sniff fonctionnant avec les sites https.~\\
+Pour la défense, il se trouve qu'on hésitait à effectuer une détection en continu q'une attaque au lieu de détecter à un instant donné. Puis nous pourrions éventuellement récupérer plus d'informations sur l'attaquant. En ce qui concerne l'anti-coupure, ce script ne nous appartenant pas, nous n'avons pas réussi à faire en sorte qu'il s'arrête après son activation.~\\
+D'autres fonctionnalités telles que le crack de clé WEP et WPA que nous avons vu durant nos devoirs pourrait venir se greffer à notre application. Toutes ces améliorations permettraient avant tout de rendre l'application plus complète et fiable.
+
 \section*{Conclusion}
 
 \newpage

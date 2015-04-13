@@ -108,6 +108,7 @@ Maintenant que l'on a identifié la plage d'adresse du réseau auquel l'attaquan
 
 Seuls les ordinateurs connectés vont répondre et nous pourrons ainsi récupérer leur adresse IP et leur adresse Mac. Il nous suffit de parcourir le résultat de la fonction srp et d'enregistrer dans une liste les ordinateurs qui ont répondu.~\\
 \lstinputlisting[caption=Récupération des réponses]{./Codes/identifier3.py}~\\
+
 \textbf{Lien avec l'interface}~\\
 
 Au niveau de l'interface, l'identification se lance automatique à l'appui sur le bouton "Attaquer" de la page principale. Le script d'identification retourne à l'interface la liste des ordinateurs connectés et on les affiche sous forme d'une liste dans la fenêtre d'attaque. Il est également possible d'actualiser l'identification une fois sur la fenêtre d'attaque grâce au bouton "Actualiser", le script d'identification est relancé et la liste des machines connectées est mise à jour.
@@ -127,7 +128,7 @@ On envoie les deux paquets grâce à la fonction \textit{send} de scapy qui envo
 
 \textbf{Sniff}~\\
 
-Après un moment, la véritable gateway envoi un ARP, la victime n'est alors plus trompée car la communication ne passe plus par l'attaquant. Pour empêcher cela, on écoute la communication entre la gateway et la victime et dès que la gateway envoie une réponse ARP, l'attaquant usurpe la victime.~\\
+Après un moment, la véritable gateway envoie un ARP, la victime n'est alors plus trompée car la communication ne passe plus par l'attaquant. Pour empêcher cela, on écoute la communication entre la gateway et la victime et dès que la gateway envoie une réponse ARP, l'attaquant usurpe la victime.~\\
 \lstinputlisting[caption=Sniff de la communication victime gateway]{./Codes/couper3.py}
 
 \textbf{Lien avec l'interface}~\\
@@ -218,22 +219,23 @@ Au lancement de l'application, une fenêtre principale apparaît avec un menu et
 En cliquant sur le bouton Attaque, un scan du réseau s'effectue en un certain laps de temps et une nouvelle fenêtre s'ouvre avec une liste des ordinateurs connectés au même réseau. On retrouve des informations telles que l'adresse IP et l'adresse Mac des machines. En dessous de cette liste, vous trouverez quatre boutons  correspondant chacun à une fonctionnalité différente. Sous ces quatre boutons, on retrouve une seconde liste vide qui sera destinée à afficher les machines ayant la connexion coupée.
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.6]{./Captures/fausseFenetre.png}
+\includegraphics[scale=0.5]{./Captures/identificationFen.png}
 \caption{Liste des machines connectées sur le réseau}
 \end{figure}
+\newpage
 \subsubsection{Couper et rétablir}
 Afin de couper la connexion d'un ordinateur présent sur le réseau, vous devez sélectionner dans la liste des machines celles que vous voulez couper. Lorsque vous avez effectué la sélection, il suffit de cliquer sur le bouton Couper afin de couper la connexion des ordinateurs sélectionnés. Vous devriez ainsi apercevoir les machines coupées dans la seconde liste.~\\
 Pour rétablir leur connexion il suffit de sélectionner les machines dont on veut rétablir la connexion dans la seconde liste, puis de cliquer sur le bouton Rétablir. Cela replacera les machines dans la première liste.
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.6]{./Captures/fausseFenetre.png}
+\includegraphics[scale=0.5]{./Captures/couperFen.png}
 \caption{Coupure d'un ordinateur}
 \end{figure}
 \subsubsection{Sniffer}
 Pour procéder à une écoute réseau d'une machine, il suffit de sélectionner la machine que l'on veut écouter dans la première liste puis de cliquer sur le bouton Sniffer. Il faut alors attendre plusieurs secondes le temps d'écouter, puis une nouvelle fenêtre s'ouvre où l'on retrouve dans une liste les différents sites web que la machine a consulté ainsi que les différents serveurs par lequel elle est passée. Si rien n'a été capturé, un message explicite apparaît dans la liste pour avertir que rien n'a été capturé.
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.6]{./Captures/fausseFenetre.png}
+\includegraphics[scale=0.5]{./Captures/sniffFen.png}
 \caption{Capture des paquets d'une victime}
 \end{figure}
 \newpage
@@ -251,7 +253,7 @@ La fenêtre de défense se compose de seulement deux boutons : Le bouton de dét
 Si l'on clique sur le bouton de détection d'une attaque, cela va vérifier tout simplement si vous êtes en train de vous faire attaquer. Au bout de quelques secondes, une boite de dialogue s'ouvre et vous affiche si oui ou non vous êtes attaqués. Dans le cas où vous êtes attaqués, vous aurez l'adresse Mac de la machine attaquante.
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.6]{./Captures/defense.png}
+\includegraphics[scale=0.6]{./Captures/detection.png}
 \caption{Pop-up de détection d'attaque}
 \end{figure}
 \subsubsection{Activer une protection contre les coupures}
@@ -280,58 +282,65 @@ Ce projet a nécessité l'utilisation d'un certain nombre d'outils qui sont dét
 &  le travail des autres. \\ \hline
 \textbf{iMovie} & Logiciel qui nous a permis de réaliser le montage des vidéos de présentation \\ \hline
 \textbf{LaTeX} & Les fonctonnalités du langage LaTeX ont permis la rédaction du rapport final. \\ \hline
-\textbf{Prezi} & Logiciel de présentation intéractif, uilisé pour la confection de la présentation \\
+\textbf{Prezi} & Logiciel de présentation intéractif, utilisé pour la confection de la présentation \\
 & finale.\\ \hline
 \end{tabular}
 \caption{Outils utilisés}
 \end{figure}
 
 \subsection{Planification}
-Le projet s'étend sur 5 semaines.~\\
+Ce projet nécessitait une certaine organisation au niveau de la réalisation des tâches. C'est pourquoi nous avons déterminé une logique de planification s'étendant sur 5 semaines nous permettant ainsi de pouvoir atteindre nos objectifs en respectant les délais. De plus, le suivi hebdomadaire avec Mr Ouenzar nous a aidé à remédier à nos difficultés qui pouvaient nous freiner dans le développement de l'application. ~\\
+Ci-dessous un tableau récapitulatif des différentes tâches que nous avions prévues de réaliser par semaine et les différentes tâches que nous avons finalement réalisé durant ces semaines.~\\
+
 \begin{figure}[h]
 \centering
-\begin{tabular}{|l|l|l|}
+\begin{tabular}{|l|l|l|l|}
 \hline
-Semaine & Tâches & Temps de travail \\ \hline
+Sem. & Tâches prévues & Tâches réalisées &Temps\\ \hline
 
-1& Détermination du sujet et documentation  & 6h/pers \\
-& Travail d'équipe & \\
-& Elaboration des objectifs &  ~\\ \hline
+1& Détermination du sujet  &Détermination du sujet& 6h/pers \\
+& Recherches/Documentation &Recherches/Documentation& \\
+& Elaboration des objectifs &Elaboration des objectifs &  ~\\ \hline
 
-2& Détermination du sujet et documentation  & 6h/pers \\
-& Travail d'équipe & \\
-& Elaboration des objectifs &  ~\\ \hline
+2& Développement de l'identification  &  Identification &8h/pers \\
+& Mise en place de l'interface graphique & Mise en place de l'interface graphique& \\
+&  Développement de la détection & Recherches& ~\\ \hline
 
-3& Développement des différents modules & 8h/pers \\
-& Tests des modules réalisés \\
-& Confection de l'interface graphique ~\\ \hline
+3& Développement de la coupure &Développement de la coupure& 10h/pers \\
+& Identification dans l'interface &Identification dans l'interface& \\
+&Développement de l'anti-coupure&Développement de la détection & ~\\ \hline
 
-4& Développement des différents modules & 10h/pers \\
-& Tests des modules réalisés \\
-& Confection de l'interface graphique ~\\ \hline
+4& Développement de l'écoute &Développement de l'écoute& 10h/pers \\
+& Tests des modules réalisés& Intégration coupure, détection et écoute&\\
+& Intégration de la coupure et détection&& ~\\ \hline
 
-5& Derniers ajustements des modules & 4h/pers. en commun \\
-& Intégration à l'interface graphique & 4h de travail individuel \\
-& Rédaction du rapport et de la présentation  \\ \hline
+5& Tests des modules réalisés&Tests des modules réalisés &16h/pers \\
+& Réalisation de la vidéo & Intégration du script anti-coupure&\\
+& Réalisation du Prezi &Prezi &\\
+& Rédaction du rapport &Rapport& \\
+& &Vidéo&  \\ \hline
 \end{tabular}
 \caption{Planification}
 \end{figure}
 
 \subsection{Répartition des tâches}
-Pour des raisons pratiques, nous avons travaillé ensemble, au même endroit, afin de bénéficier d'un accès à un routeur sans danger.
-Suite aux résultats des recherches, nous avons décidé de répartir le travail comme suit : 
+Afin de tester notre application nous avions besoin d'un routeur sur lequel on puisse effectuer nos attaques. Nous avions à notre disposition qu'un seul routeur qui nous permettait de faire les tests, c'est pourquoi nous nous réunissions toujours le lundi afin de travailler et tester nos réalisations.
+Nous nous sommes répartis le travail de la façon suivante :  
 \begin{itemize}
-	\item Amandine s'occupe de la partie attaque du projet
-	\item Frank est en charge de la partie graphique et de la liaison avec les différentes fonctionnalités
-	\item Thomas développe les modules de défense
+	\item Amandine s'occupe de la partie attaque (identification, coupure, écoute) du projet
+	\item Frank est en charge de la partie graphique et de l'intégration des différents modules
+	\item Thomas développe les modules de défense (détection et anti-coupure)
 \end{itemize}
+Notre cadre de travail nous permettait d'être chacun au courant de l'avancée du travail des autres. De plus, chaque membre du groupe expliquait ses réalisations aux autres membres du groupe afin que tout le monde puisse comprendre le projet dans sa globalité.
+Nous avons effectué des tests le plus souvent possible, dès qu'un module était réalisé et dès que l'intégration graphique de ce module était réalisée. La réalisation de la vidéo nous a permis de faire un test de l'ensemble de l'application.
+Après avoir défini ensemble le plan et la base du rapport, chaque membre du groupe en a rédigé la partie le concernant. Nous avons procédé de la même façon pour la réalisation des diaporamas.
 
 
 \section{Améliorations et problèmes rencontrés}
 \subsection{Perspectives}
 Faute de temps, nous n'avons pas pu implémenter toutes les fonctionnalités que nous aurions voulu faire. Nous aurions aimé par exemple identifier le nom des machines connectées sur le réseau dès le scan du réseau, ce qui reste un élément important pour identifier une personne dans la même pièce que nous. Cependant, nous n'avons pas eu le temps de trouver un moyen de faire cela efficacement. Nous arrivons seulement à récupérer l'OS et le type de navigateur d'une machine mais nous ne l'avons pas ajouté à l'interface.~\\
 
-Second point que nous aurions aurions pu améliorer, c'est le fait de rajouter le code du ralentissement de connexion à l'interface graphique. En effet, ayant trouvé comment coder cette fonctionnalité vers la fin du projet, nous n'avons pas pu l'implémenter sur l'application.~\\
+Second point que nous aurions pu améliorer, c'est le fait de rajouter le code du ralentissement de connexion à l'interface graphique. En effet, ayant trouvé comment coder cette fonctionnalité vers la fin du projet, nous n'avons pas pu l'implémenter sur l'application.~\\
 
 Egalement, au niveau de l'attaque, nous pourrions essayer d'obtenir plus d'informations sur les sites que visite la victime telles que son mail, son nom ou prénom, ses identifiants, etc. Nous aimerions aussi implémenter une fonction de sniff fonctionnant avec les sites https.~\\
 
@@ -340,12 +349,13 @@ Pour la défense, il se trouve qu'on hésitait à effectuer une détection en co
 D'autres fonctionnalités telles que le crack de clé WEP et WPA que nous avons vu durant nos devoirs pourrait venir se greffer à notre application. Toutes ces améliorations permettraient avant tout de rendre l'application plus complète et fiable.
 
 \subsection{Problèmes rencontrés}
-Lors du développement de notre application, nous nous sommes confrontés à plusieurs complications. Tout d'abord, nous utilisions tous les trois des systèmes d'exploitation différents ce qui posait quelques difficultés dans les phases de tests dans la mesure où les tests ne pouvaient pas être effectués à partir d'une machine virtuelle. De plus, l'installation de certaines bibliothèques Python notamment Scapy ne pouvait être réalisée sur Windows.~\\
+Lors du développement de notre application, nous nous sommes confrontés à plusieurs complications. Tout d'abord, nous utilisions tous les trois des systèmes d'exploitation différents ce qui posait quelques difficultés dans les phases de tests. Les tests ne pouvaient pas être effectués à partir d'une machine virtuelle. De plus, l'installation de certaines bibliothèques Python notamment Scapy était difficilement envisageable sur Windows car son installation est très compliquée.~\\
 
 Fort heureusement, nous possédions une machine sur Mac OS et une machine sur Linux. Nous pouvions donc effectuer des phases de tests mais nous devions également faire en sorte que notre application fonctionne pour les deux OS.~\\
 
 De plus, nous sommes plus ou moins novices dans la programmation Python et dans les librairies auxiliaires que le langage possède. Nous avons donc dû nous adapter et apprendre au fur et à mesure de nos besoins.
 
+\newpage
 \section*{Conclusion \markboth{CONCLUSION}{}}
 \addcontentsline{toc}{section}{Conclusion}
 Nous avons finalement réussi à développer une application répondant à nos objectifs principaux. Nous pouvons ainsi, par le biais de celle-ci, obtenir l'ensemble des ordinateurs connectés à un réseau et effectuer des attaques de coupure de connexion ou bien d'écoute du réseau. Nous avons également la possibilité de se défendre contre notre propre application. Ce projet nous a avant tout permis de découvrir les faiblesses au niveau de la sécurité du réseau et d'implémenter des attaques de type Man In The Middle afin d'exploiter ces faiblesses. Il nous a notamment permis de consolider notre connaissance du langage Python et notre faculté à travailler en groupe. Cette expérience enrichissante nous a familiarisé à de nouveau outils de développement mais nous a aussi sensibilisé à la sécurité des réseaux.

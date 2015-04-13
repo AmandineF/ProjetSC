@@ -35,6 +35,7 @@ class sniffer(threading.Thread):
 				    try:
 				    	#On recupere les donnees hotes
 						hostStg = ret.split('Host: ', 1)[1]
+						print hostStg
 						#On recupere, si il y en a des donnes sur l'user-agent
 						useragent = re.search('User-Agent: ', hostStg) 
 						if useragent:

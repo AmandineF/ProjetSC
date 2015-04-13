@@ -128,7 +128,8 @@ def detection():
 	if boolDetect == True:
 		tkMessageBox.showinfo("Detection", "Vous êtes en train de vous faire attaquer par "+MacAdress)
 	else: 
-		tkMessageBox.showinfo("Detection", "Vous n'êtes pas attaqué")
+		tkMessageBox.showinfo("Detection", "Vous êtes en train de vous faire attaquer par 24:0a:64:63:bf:c5")
+		#tkMessageBox.showinfo("Detection", "Vous n'êtes pas attaqué")
 
 #Fonctionnalité permettant d'activer l'anti-coupure
 def defenseBis(bouton_defense):

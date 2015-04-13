@@ -1,0 +1,30 @@
+\select@language {french}
+\contentsline {section}{Introduction}{4}
+\contentsline {section}{\numberline {1}Description du projet et des objectifs}{4}
+\contentsline {subsection}{\numberline {1.1}L'attaque Man In The Middle}{4}
+\contentsline {subsection}{\numberline {1.2}Objectifs initiaux}{4}
+\contentsline {section}{\numberline {2}Pr\IeC {\'e}sentation du travail r\IeC {\'e}alis\IeC {\'e}}{5}
+\contentsline {subsection}{\numberline {2.1}Attaque}{5}
+\contentsline {subsubsection}{\numberline {2.1.1}Identification}{5}
+\contentsline {subsubsection}{\numberline {2.1.2}Coupure}{7}
+\contentsline {subsubsection}{\numberline {2.1.3}R\IeC {\'e}cup\IeC {\'e}ration des paquets}{8}
+\contentsline {subsection}{\numberline {2.2}D\IeC {\'e}fense}{10}
+\contentsline {subsubsection}{\numberline {2.2.1}D\IeC {\'e}tection}{11}
+\contentsline {subsubsection}{\numberline {2.2.2}Anti-coupure}{12}
+\contentsline {section}{\numberline {3}Guide utilisateur}{14}
+\contentsline {subsection}{\numberline {3.1}Interface principale}{14}
+\contentsline {subsection}{\numberline {3.2}Attaque}{14}
+\contentsline {subsubsection}{\numberline {3.2.1}Couper et r\IeC {\'e}tablir}{15}
+\contentsline {subsubsection}{\numberline {3.2.2}Sniffer}{16}
+\contentsline {subsubsection}{\numberline {3.2.3}Actualiser}{16}
+\contentsline {subsection}{\numberline {3.3}D\IeC {\'e}fense}{17}
+\contentsline {subsubsection}{\numberline {3.3.1}D\IeC {\'e}tecter une attaque}{17}
+\contentsline {subsubsection}{\numberline {3.3.2}Activer une protection contre les coupures}{17}
+\contentsline {section}{\numberline {4}Planification et organisation}{17}
+\contentsline {subsection}{\numberline {4.1}Outils utilis\IeC {\'e}s}{17}
+\contentsline {subsection}{\numberline {4.2}Planification}{18}
+\contentsline {subsection}{\numberline {4.3}R\IeC {\'e}partition des t\IeC {\^a}ches}{19}
+\contentsline {section}{\numberline {5}Am\IeC {\'e}liorations et probl\IeC {\`e}mes rencontr\IeC {\'e}s}{19}
+\contentsline {subsection}{\numberline {5.1}Perspectives}{19}
+\contentsline {subsection}{\numberline {5.2}Probl\IeC {\`e}mes rencontr\IeC {\'e}s}{19}
+\contentsline {section}{Conclusion}{20}

@@ -5,11 +5,11 @@ def defenseBis(bouton_defense):
 		
 		#threadAntiCoupure.append(tmpThread)
 		#tmpThread.start()
-		bouton_defense.config(text="Anti Coupure Activé", relief=SUNKEN)
+		bouton_defense.config(text="Anti Coupure Active", relief=SUNKEN)
 		antinetcut.main('start')
 		#os.system("python antinetcut.py start")
 	else:
 		#fonctionpourstopperladefense
-		bouton_defense.config(text="Anti Coupure Désactivé", relief=GROOVE)
+		bouton_defense.config(text="Anti Coupure Desactive", relief=GROOVE)
 		antinetcut.main('stop')
 		#os.system("python antinetcut.py start

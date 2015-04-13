@@ -206,6 +206,24 @@ Graphiquement, après avoir sélectionné Défense dans le menu de l'application
 \subsubsection{Anti-coupure}
 Lors de nos recherches, nous avons également trouvé un script complet permettant de se protéger des attaques de coupure de connexion. Nous n'avons malheureusement pas eu assez de temps pour implémenter notre propre solution mais nous avons décidé d'utiliser le script afin d'offrir tout de même cette défense dans notre application.
 
+Ce code permet, via le choix d'option, de commencer ou d'arreter la protection. ~\\
+	\lstinputlisting[caption=]{./Codes/startstopanti.py}~\\
+	
+Graphiquement, c'est cet appel de fonction qui est utilisé pour lancer ou arrêter la protection. La protection est activable dans l'interface grâce à l'utilisation du bouton Anti-Coupure.~\\
+	\lstinputlisting[caption=]{./Codes/anticoupure.py}~\\	
+	
+	Dans le code, après définition des différentes fonctions appelées, on retrouve la partie à proprement utilisée. elle se situe dans la fonction \textit{startAntinetcut}	
+	Dans cette fonction, on définit notre adresse IP et MAC. L'information est automatiquement récupérée.~\\
+		\lstinputlisting[caption=]{./Codes/IPMAC.py}~\\
+		
+		Puis, notre défense va se mettre en place. Pour cela, on va créer deux paquets, \textit{p1} et \textit{p2}: ~\\
+		\lstinputlisting[caption=]{./Codes/paquets.py}~\\
+		Ces paquets permettent d'envoyer des requêtes ARP avec pour informations nos adresses MAC et IP à toutes les machines du réseau.
+		
+		Enfin, une boucle va envoyer nos deux paquets. On utilise pour cela la fonction \textit{sendp()} qui permet d'envoyer des paquets en couche liaison de données du modèle OSI.
+		Tant que le programme est activé, on envoie contiuellement nos paquets.~\\
+		\lstinputlisting[caption=]{./Codes/boucle.py}~\\	
+
 
 \section{Guide utilisateur}
 \subsection{Interface principale}
@@ -238,10 +256,11 @@ Pour procéder à une écoute réseau d'une machine, il suffit de sélectionner 
 \includegraphics[scale=0.5]{./Captures/sniffFen.png}
 \caption{Capture des paquets d'une victime}
 \end{figure}
-\newpage
+
 \subsubsection{Actualiser}
 Sur la fenêtre d'attaque, le bouton Actualiser permet d'actualiser la liste des ordinateurs connectés au réseau. Cela prend quelques secondes pour effectuer le scan de nouveau. Pour exécuter cette action, il faut qu'aucune machine ne soit coupée.
 
+\newpage
 \subsection{Défense}
 La fenêtre de défense se compose de seulement deux boutons : Le bouton de détection d'une attaque et le bouton d'anti-coupure.
 \begin{figure}[!h]
@@ -249,6 +268,7 @@ La fenêtre de défense se compose de seulement deux boutons : Le bouton de dét
 \includegraphics[scale=0.6]{./Captures/defense.png}
 \caption{Fenêtre de défense}
 \end{figure}
+
 \subsubsection{Détecter une attaque}
 Si l'on clique sur le bouton de détection d'une attaque, cela va vérifier tout simplement si vous êtes en train de vous faire attaquer. Au bout de quelques secondes, une boite de dialogue s'ouvre et vous affiche si oui ou non vous êtes attaqués. Dans le cas où vous êtes attaqués, vous aurez l'adresse Mac de la machine attaquante.
 \begin{figure}[!h]
@@ -355,7 +375,6 @@ Fort heureusement, nous possédions une machine sur Mac OS et une machine sur Li
 
 De plus, nous sommes plus ou moins novices dans la programmation Python et dans les librairies auxiliaires que le langage possède. Nous avons donc dû nous adapter et apprendre au fur et à mesure de nos besoins.
 
-\newpage
 \section*{Conclusion \markboth{CONCLUSION}{}}
 \addcontentsline{toc}{section}{Conclusion}
 Nous avons finalement réussi à développer une application répondant à nos objectifs principaux. Nous pouvons ainsi, par le biais de celle-ci, obtenir l'ensemble des ordinateurs connectés à un réseau et effectuer des attaques de coupure de connexion ou bien d'écoute du réseau. Nous avons également la possibilité de se défendre contre notre propre application. Ce projet nous a avant tout permis de découvrir les faiblesses au niveau de la sécurité du réseau et d'implémenter des attaques de type Man In The Middle afin d'exploiter ces faiblesses. Il nous a notamment permis de consolider notre connaissance du langage Python et notre faculté à travailler en groupe. Cette expérience enrichissante nous a familiarisé à de nouveau outils de développement mais nous a aussi sensibilisé à la sécurité des réseaux.

@@ -2,6 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
+\usepackage{array}
 \usepackage[right=2.5cm, bottom=2.5cm,top=2.5cm, left=2.5cm]{geometry}
 \usepackage{graphicx}
 \usepackage{subfigure}
@@ -115,25 +116,34 @@ Cette attaque consiste simplement a couper la connexion au réseau d'une autre m
 \textbf{Création des faux paquets}~\\
 
 On créée les deux faux paquets : le premier pour se faire passer pour la gateway auprès de la victime et le second pour se faire passer pour la victime auprès de la gateway.~\\
-\lstinputlisting[caption=Création des faux paquets]{./Codes/couper1.py}~\\
+\lstinputlisting[caption=Création des faux paquets]{./Codes/couper1.py}
+
 \textbf{Envoi des paquets}~\\
 
 On envoi les deux paquets grâce à la fonction \textit{send} de scapy qui envoi des paquets sur la couche 3.~\\
-\lstinputlisting[caption=Envoi des paquets]{./Codes/couper2.py}~\\
+\lstinputlisting[caption=Envoi des paquets]{./Codes/couper2.py}
+
 \textbf{Sniff}~\\
 
 Après un moment, la véritable gateway envoi un ARP, la victime n'est alors plus trompée car la communication ne passe plus par l'attaquant. Pour empêcher cela, on écoute la communication entre la gateway et la victime et dès que la gateway envoie une réponse ARP, l'attaquant usurpe la victime.~\\
-\lstinputlisting[caption=Sniff de la communication victime gateway]{./Codes/couper3.py}~\\
+\lstinputlisting[caption=Sniff de la communication victime gateway]{./Codes/couper3.py}
+
 \textbf{Lien avec l'interface}~\\
 
-Dans l'interface, la coupure peut se réaliser en sélectionnant une victime dans la liste des machines connectées au réseau et en appuyant sur le bouton couper. Il est également possible de couper plusieurs machines en même temps. Pour pouvoir couper plusieurs machines en même temps, le programme principal crée, pour chaque victime, un thread qui appelle le script de coupure. Lorsque l'attaquant souhaite rétablir la connexion de la victime, il peut appuyer sur le bouton rétablir, et le thread se termine.
+Dans l'interface, la coupure peut se réaliser en sélectionnant une victime dans la liste des machines connectées au réseau et en appuyant sur le bouton couper. Il est également possible de couper plusieurs machines en même temps. Pour pouvoir couper plusieurs machines en même temps, le programme principal crée, pour chaque victime, un thread qui appelle le script de coupure. ~\\
+\lstinputlisting[caption=Lancement d'un thread de coupure]{./Codes/mainGraphique2.py}~\\
 
-\subsubsection{Ecoute}
-Lors de cette attaque, on veut, en quelque sorte, espionner la victime en ayant accès à la liste de ses visites sur internet. Comme lors de l'attaque précédente, pour avoir accès aux données échangées entre la victime et la gateway, il faut réaliser une attaque man in the middle afin de se placer entre les deux et récupérer les paquets échangés.
+Lorsque l'attaquant souhaite rétablir la connexion de la victime, il peut appuyer sur le bouton rétablir, et le thread se termine.~\\
+\lstinputlisting[caption=Arrêt d'un thread de coupure]{./Codes/mainGraphique3.py}
+
+\subsubsection{Récupération des paquets}
+Lors de cette attaque, on veut, en quelque sorte, espionner la victime en ayant accès à la liste de ses visites sur internet. Comme lors de l'attaque précédente, pour avoir accès aux données échangées entre la victime et la gateway, il faut réaliser une attaque man in the middle afin de se placer entre les deux et récupérer les paquets échangés.~\\
+
 \textbf{Man in the middle}~\\
 
 On commence par mettre en place l'attaque man in the middle en envoyant des faux paquets ARP comme lors de l'attaque précédente. Mais, cette fois ci, on veut que la victime conserve un accès à internet afin d'observer ses visites. On envoie donc les faux paquets toutes les 1,5 ms et on n'écoute pas la communication entre la victime et la gateway.~\\
-\lstinputlisting[caption=Man in the middle]{./Codes/attaque.py}~\\
+\lstinputlisting[caption=Man in the middle]{./Codes/attaque.py}
+
 \textbf{Ecoute}~\\
 
 Pour observer la victime on lance une écoute sur son adresse IP. Etant donné que l'on se fait passer pour la gateway, la victime nous envoie directement ses paquets et on peut les analyser grâce à la fonction http\_header.~\\
@@ -148,16 +158,52 @@ Une ces données récupérées, on peut récupérer plusieurs données :
 \end{itemize}
 On ne trouve pas toujours toutes les données dans un paquet c'est pourquoi nous avons décidé de récupérer l'adresse du serveur si l'adresse exacte n'était pas présente. Pour effectuer cette récupération d'information et les recherches dans les paquets nous avons utilisé des expressions régulières et le module \textit{regex} de python.
  ~\\
-\lstinputlisting[caption=Récupération des réponses]{./Codes/ecoute2.py}~\\
+\lstinputlisting[caption=Récupération des réponses]{./Codes/ecoute2.py}
+
 \textbf{Lien avec l'interface}~\\
 
 Pour effectuer une attaque d'écoute, l'utilisateur doit sélectionner sa victime dans la liste et cliquer sur le bouton sniffer. Ce bouton lance alors deux threads en parallèle. Le premier exécute le script de l'attaque et le second le script d'écoute.
 
+\lstinputlisting[caption=Lancement des threads pour intercepter les paquets]{./Codes/mainGraphique1.py}
+
 \subsection{Défense}
 Dans cette section, nous allons présenter nos applications de défense.
-Afin de contrer les attaques ciblées sur une machine, nous avons déployé deux scripts. Le premier réalise une détection pour savoir si la machine est victime d'une attaque ARP spoofing. Le second script est une simple commande qui permet de contrer l'attaque de coupe de connexion.
+Afin de contrer les attaques ciblées sur une machine, nous avons déployé deux scripts. Le premier réalise une détection pour savoir si la machine est victime d'une attaque ARP spoofing. Le second script est une simple commande qui permet de contrer l'attaque de coupe de connexion. ~\\
+
+
 \subsubsection{Détection}
+
+La première parade pour se protéger d'une attaque de type Man In The Middle est de pouvoir la détecter. C'est ce que nous allons voir dans cette section. 
+
+Du point de vue théorique, lorsque l'on effectue un ARP poisoning, on cherche à faire passer sa propre machine pour le routeur auprès des autres machines du réseau. Comme nous l'avons vu dans la mise en place de l'attaque, on remplace l'adresse MAC du routeur par l'adresse MAC de la machine pirate. Ce changement n'est pas visible directement mais est pourtant bien présent dans les informations contenues dans les paquets. ~\\
+Ce sont ces informations que notre script de détection va intercepté. En pratique, la fonction \textit{packetfilter} va récupérer les informations suivantes: ~\\
+\begin{itemize}
+	\item L'adresse IP de la source
+	\item L'adresse MAC de la source
+	\item L'adresse IP de destination
+	\item L'opération du paquet
+\end{itemize} ~\\
+\lstinputlisting[caption=Récupération des informations du paquet]{./Codes/packetfilter.py}~\\
+
+Si les informations recueillies ne sont pas cohérentes, on les vérifient grâce à la fonction \textit{checkspoof}. ~\\
+\lstinputlisting[caption=Vérification de la cohérence des informations]{./Codes/checkspoof.py}~\\
+
+Si la source du paquet concerné n'est pas clairement identifiée (présent dans la \textit{list requests}) et si l'adresse ne correspond pas, on suppose qu'une attaque est en cours. L'adresse MAC associée à l'adresse source est enregistrée dans un fichier.
+Si la source était présente dans \textit{list requests}, on la supprime de cette liste et on continue le traitement.~\\
+\lstinputlisting[caption=Traitement graphique]{./Codes/detection.py}~\\
+
+Graphiquement, après avoir sélectionné Défense dans le menu de l'application, l'option Détection permet de lancer ce programme; c'est la fonction \textit{detection} qui s'en charge. Après traitement des données, on lit un fichier où est stocké le résultat de notre détection:
+\begin{itemize}
+	\item Si le fichier est vide, aucune attaque n'est détectée, on affiche le message "Vous n'êtes pas attaqué"
+	\item Si le fichier n'est pas vide, il contient l'adresse MAC de la machine pirate. On message d'alerte est alors affiché en précisant l'adresse pour permettre d'identifié l'auteur de l'attaque.
+	
+\end{itemize}
+
+
+
 \subsubsection{Anti-coupure}
+Lors de nos recherches, nous avons également trouvé un script complet permettant de se protéger des attaques de coupure de connexion. Nous n'avons malheureusement pas eu assez de temps pour implémenter notre propre solution mais nous avons décidé d'utiliser le script afin d'offrir tout de même cette défense dans notre application.
+
 
 \section{Guide utilisateur}
 \subsection{Interface principale}
@@ -184,19 +230,92 @@ Si l'on clique sur le bouton de détection d'une attaque, cela va vérifier tout
 \subsubsection{Activer une protection contre les coupures}
 Si l'on active le bouton de protection contre les coupures, votre connexion internet ne pourra plus être coupée. Vous pourrez ainsi naviguer sans inquiétude sur Internet.
 
-\section{Planification et organisation}
-\subsection{Outils utilisés}
-\subsection{Planification}
+
+
+
+\subsection{Planification et organisation}
+Dans cette section, nous allons décrire comment nous avons organisé le travail.
+
+\subsubsection{Outils utilisés}
+Ce projet a nécessité l'utilisation d'un certains nombres d'outils qui sont détaillés dans le tableau ci-dessous.~\\
+\begin{figure}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+   \textbf{Python} & Langage utilisé pour sa polyvalence et son efficacité dans le développement de  \\
+    &code pour la sécurité. \\ \hline
+    \textbf{Scapy} & Framework basé sur Python fournissant un grand nombres de fonctions pour  \\
+    & manipuler les paquets réseau. \\ \hline
+   \textbf{Google Drive} & Le début du développement s'est fait grâce à la plateforme de création et  \\
+	& de partage de fichiers de Google. \\ \hline
+\textbf{Github} & Site d'hébergement et de gestion pour le développement informatique. Nous \\ 
+&   l'avons utilisé pour partager le code et les notes afin que chacun puisse suivre   \\
+&  le travail des autres. \\ \hline
+\textbf{iMovie} & Logiciel qui nous a permis de réaliser le montage des vidéos de présentation \\ \hline
+\textbf{LaTeX} & Les fonctonnalités du langage LaTeX ont permis la rédaction du rapport final. \\ \hline
+\textbf{Prezi} & Logiciel de présentation intéractif, uilisé pour la confection de la présentation \\
+& finale.\\ \hline
+\end{tabular}
+\caption{Outils utilisés}
+\end{figure}
+
+\subsubsection{Planification}
+Le projet s'étend sur 5 semaines.~\\
+\begin{figure}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Semaine & Tâches & Temps de travail \\ \hline
+
+1& Détermination du sujet et documentation  & 6h/pers \\
+& Travail d'équipe & \\
+& Elaboration des objectifs &  ~\\ \hline
+
+2& Détermination du sujet et documentation  & 6h/pers \\
+& Travail d'équipe & \\
+& Elaboration des objectifs &  ~\\ \hline
+
+3& Développement des différents modules & 8h/pers \\
+& Tests des modules réalisés \\
+& Confection de l'interface graphique ~\\ \hline
+
+4& Développement des différents modules & 10h/pers \\
+& Tests des modules réalisés \\
+& Confection de l'interface graphique ~\\ \hline
+
+5& Derniers ajustements des modules & 4h/pers. en commun \\
+& Intégration à l'interface graphique & 4h de travail individuel \\
+& Rédaction du rapport et de la présentation  \\ \hline
+\end{tabular}
+\caption{Planification}
+\end{figure}
+
+
+
+
+\subsubsection{Répartition des tâches}
+Pour des raisons pratiques, le groupe travaille ensemble, au même endroit, afin de bénéficier d'un accès à un routeur sans danger.
+Suite aux résultats des recherches, nous avons décidé de répartir le travail comme suit : 
+\begin{itemize}
+	\item Amandine s'occupe de la partie attaque du projet
+	\item Frank est en charge de la partie graphique
+	\item Thomas développe les modules de défense
+\end{itemize}
+
 
 \section{Améliorations}
 Faute de temps, nous n'avons pas pu implémenter toutes les fonctionnalités que nous aurions pu faire. Nous aurions aimé par exemple identifier le nom des machines connectées sur le réseau dès le scan du réseau, ce qui reste un élément important pour identifier une personne dans la même pièce que nous. Cependant, nous n'avons pas eu le temps de trouver un moyen de faire cela efficacement. Nous arrivons seulement à récupérer l'OS et le type de navigateur d'une machine mais nous ne l'avons pas ajouté à l'interface.~\\
+
 Second point que nous aurions aurions pu améliorer, c'est le fait de rajouter le code du ralentissement de connexion à l'interface graphique. En effet, ayant trouvé comment coder cette fonctionnalité vers la fin du projet, nous n'avons pas pu l'implémenter sur l'application.~\\
+
 Egalement, au niveau de l'attaque, nous pourrions essayer d'obtenir plus d'informations sur les sites que visite la victime telles que son mail, son nom ou prénom, ses identifiants, etc. Nous aimerions aussi implémenter une fonction de sniff fonctionnant avec les sites https.~\\
+
 Pour la défense, il se trouve qu'on hésitait à effectuer une détection en continu q'une attaque au lieu de détecter à un instant donné. Puis nous pourrions éventuellement récupérer plus d'informations sur l'attaquant. En ce qui concerne l'anti-coupure, ce script ne nous appartenant pas, nous n'avons pas réussi à faire en sorte qu'il s'arrête après son activation.~\\
+
 D'autres fonctionnalités telles que le crack de clé WEP et WPA que nous avons vu durant nos devoirs pourrait venir se greffer à notre application. Toutes ces améliorations permettraient avant tout de rendre l'application plus complète et fiable.
 
 \section*{Conclusion}
-
+Ce projet a permis de developper une application permettant de reproduire une attaque de Man In The Middle. Le travail de recherche et de développement a été une expérience enrichissante tant sur le plan individuel que collectif. Le travail réalisé et les améliorations possibles à apporter au projet nous montre le potentiel qu'offre notre application.
 \newpage
 \listoffigures
 \lstlistoflistings

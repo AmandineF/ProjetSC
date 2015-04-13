@@ -47,10 +47,10 @@
 \newpage
 \tableofcontents
 \newpage
-\section*{Introduction}
-Avec la multiplication des objets connectés, notamment les smartphones et autres appareils mobiles, de nombreux réseaux publics ont vu le jour dans divers endroits. Cependant, la sécurité de ces réseaux est parfois douteuse et il est aisé de s’y introduire, à l'insu de tous. Une fois sur ces réseaux, les possibiltés d'intrusions et de malveillances sont nombreuses. 
+\section*{Introduction \markboth{INTRODUCTION}{}}
+\addcontentsline{toc}{section}{Introduction}
 
-Parmi ces intrusions, l'une d'elles peut être particulièrement efficace et dangereuse pour les personnes visées. Cette attaque se nomme Man In The Middle.
+Avec la multiplication des objets connectés, notamment les smartphones et autres appareils mobiles, de nombreux réseaux publics ont vu le jour dans divers endroits. Cependant, la sécurité de ces réseaux est parfois douteuse et il est aisé de s’y introduire, à l'insu de tous. Une fois sur ces réseaux, les possibiltés d'intrusions et de malveillances sont nombreuses. Parmi ces intrusions, l'une d'elles peut être particulièrement efficace et dangereuse pour les personnes visées. Cette attaque se nomme Man In The Middle.
 
 Ce projet a pour but d'étudier cette faiblesse du réseau en développant une application capable de reproduire les principales attaques Man In the Middle mais également de pouvoir s'en protéger.
 
@@ -122,7 +122,7 @@ On crée les deux faux paquets : le premier pour se faire passer pour la gateway
 
 \textbf{Envoi des paquets}~\\
 
-On envoie les deux paquets grâce à la fonction \textit{send} de scapy qui envoie des paquets sur la couche 3.~\\
+On envoie les deux paquets grâce à la fonction \textit{send} de scapy qui envoie des paquets sur la couche réseau.~\\
 \lstinputlisting[caption=Envoi des paquets]{./Codes/couper2.py}
 
 \textbf{Sniff}~\\
@@ -236,6 +236,7 @@ Pour procéder à une écoute réseau d'une machine, il suffit de sélectionner 
 \includegraphics[scale=0.6]{./Captures/fausseFenetre.png}
 \caption{Capture des paquets d'une victime}
 \end{figure}
+\newpage
 \subsubsection{Actualiser}
 Sur la fenêtre d'attaque, le bouton Actualiser permet d'actualiser la liste des ordinateurs connectés au réseau. Cela prend quelques secondes pour effectuer le scan de nouveau. Pour exécuter cette action, il faut qu'aucune machine ne soit coupée.
 
@@ -340,10 +341,13 @@ D'autres fonctionnalités telles que le crack de clé WEP et WPA que nous avons 
 
 \subsection{Problèmes rencontrés}
 Lors du développement de notre application, nous nous sommes confrontés à plusieurs complications. Tout d'abord, nous utilisions tous les trois des systèmes d'exploitation différents ce qui posait quelques difficultés dans les phases de tests dans la mesure où les tests ne pouvaient pas être effectués à partir d'une machine virtuelle. De plus, l'installation de certaines bibliothèques Python notamment Scapy ne pouvait être réalisée sur Windows.~\\
+
 Fort heureusement, nous possédions une machine sur Mac OS et une machine sur Linux. Nous pouvions donc effectuer des phases de tests mais nous devions également faire en sorte que notre application fonctionne pour les deux OS.~\\
+
 De plus, nous sommes plus ou moins novices dans la programmation Python et dans les librairies auxiliaires que le langage possède. Nous avons donc dû nous adapter et apprendre au fur et à mesure de nos besoins.
 
-\section*{Conclusion}
+\section*{Conclusion \markboth{CONCLUSION}{}}
+\addcontentsline{toc}{section}{Conclusion}
 Nous avons finalement réussi à développer une application répondant à nos objectifs principaux. Nous pouvons ainsi, par le biais de celle-ci, obtenir l'ensemble des ordinateurs connectés à un réseau et effectuer des attaques de coupure de connexion ou bien d'écoute du réseau. Nous avons également la possibilité de se défendre contre notre propre application. Ce projet nous a avant tout permis de découvrir les faiblesses au niveau de la sécurité du réseau et d'implémenter des attaques de type Man In The Middle afin d'exploiter ces faiblesses. Il nous a notamment permis de consolider notre connaissance du langage Python et notre faculté à travailler en groupe. Cette expérience enrichissante nous a familiarisé à de nouveau outils de développement mais nous a aussi sensibilisé à la sécurité des réseaux.
 
 \newpage

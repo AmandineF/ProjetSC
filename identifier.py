@@ -29,7 +29,6 @@ def identification():
 				#On recupere la plage d'adresses du reseau
 				netaddr_reseau = netaddr.IPNetwork(str(netaddr_reseau_ip) + '/' + str(netaddr_masque_sr))
 				network = str(netaddr_reseau)
-				print network
 				break
 			except:
 				#Si ce n'est pas l'interface utilisee, on passe 
@@ -57,5 +56,4 @@ def identification():
 		return MACIP
 	else:
 		print 'Erreur de reconnaissance réseau'
-identification()
 		

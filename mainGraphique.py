@@ -61,14 +61,16 @@ def attaqueRes():
 	listeOrdi = Listbox(label, selectmode="multiple", width=60, height=10)
 	listeOrdi.pack()
 	#L'indice 0 du tableau correspond aux donnees (IP, mac) du routeur que l'on sauvegarde
-	nomGw, IpGw, MacGw = MacIP[0]
+	if(len(MacIP) > 0):
+		nomGw, IpGw, MacGw = MacIP[0]
 	
 	#Insertion des informations dans la liste des ordinateurs connectes
 	i=1
-	while i < len(MacIP):
-		nom, ip, mac = MacIP[i]
-		listeOrdi.insert(END, ""+nom+" "+ip+" "+mac)
-		i +=1
+	if(len(MacIP) > 0):
+		while i < len(MacIP):
+			nom, ip, mac = MacIP[i]
+			listeOrdi.insert(END, ""+nom+" "+ip+" "+mac)
+			i +=1
 
 	#Creation d'une liste vide qui servira a presenter les ordinateurs ayant la connexion coupee
 	label2 = LabelFrame(fenetre, text="Ordinateurs coupés :")
